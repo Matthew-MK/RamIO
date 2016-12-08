@@ -26,8 +26,9 @@ Game.run = (function() {
         loops = 0;
 
         while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
-            Player.updateCoordinates();
-            io.emit('PlayerUpdate', Player.id, Player.x, Player.y, Player.size, Player.color);
+            // update the player's coordinates
+            updateCoordinates();
+            socket.emit('PlayerUpdate', Player.id, Player.x, Player.y, Player.size, Player.color);
             nextGameTick += skipTicks;
             loops++;
         }

@@ -7,6 +7,7 @@ socket.on('PlayerSetup', function (id, coords, color) {
     Player.x = coords[0];
     Player.y = coords[1];
     Player.color = color;
+    drawMap(Player.entities, Player.grass);
     // debugging player connection
     // socket.emit('setup', Player.id, Player.x, Player.y, Player.color);
 });

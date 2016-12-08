@@ -61,26 +61,24 @@ Game.initialize = function() {
     this.gamestart = (new Date).getTime;
 };
 
-Game.run = (function() {
+Game.run = function() {
     console.log('running game loop');
     var loops = 0, skipTicks = 1000 / Game.fps,
         maxFrameSkip = 10,
         nextGameTick = (new Date).getTime();
-
-    return function() {
         loops = 0;
 
-        while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
+        while ((new Date).getTime() > nextGameTick) {
             io.emit('GameUpdate', this.entities,this.grass);
+            console.log('running game loop');
             nextGameTick += skipTicks;
             loops++;
         }
-    };
-})();
+};
 
 // Start the game loop
 Game.initialize();
-Game._intervalId = setInterval(Game.run, 1);
+setInterval(Game.run, 1000/Game.fps);
 
 function randomColor(brightness){
     function randomChannel(brightness){
