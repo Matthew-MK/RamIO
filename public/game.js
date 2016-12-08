@@ -27,7 +27,7 @@ Game.run = (function() {
 
         while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
             Player.updateCoordinates();
-            io.emit('PlayerUpdate', Player.id, Player.x, Player.y, Player.size);
+            io.emit('PlayerUpdate', Player.id, Player.x, Player.y, Player.size, Player.color);
             nextGameTick += skipTicks;
             loops++;
         }
@@ -120,12 +120,3 @@ function log2(val) {
     return Math.log(val) / Math.LN2;
 }
 
-function randomColor(brightness){
-    function randomChannel(brightness){
-        var r = 255-brightness;
-        var n = 0|((Math.random() * r) + brightness);
-        var s = n.toString(16);
-        return (s.length==1) ? '0'+s : s;
-    }
-    return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
-}

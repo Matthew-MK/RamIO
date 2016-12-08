@@ -14,13 +14,19 @@ io.on('connection', function(socket){
     // Assign id between 1 and 1000
     var id = Math.floor(Math.random()*1000 + 1);
     // x,y coordinates
-    var coords = [Math.random()*10000, Math.random()*10000];
+    var coords = [Math.floor(Math.random()*1000), Math.floor(Math.random()*1000)];
     var color = randomColor(150);
     // Send an id and coordinates for the player to spawn at
     socket.emit('PlayerSetup', id, coords, color);
+    Game.entities[id] = [coords[0],coords[1],10, color];
+    /* debugging player connection
+    socket.on('setup', function (id,x,y,color) {
+        console.log(id + " setup at " + x + "," + y + " with color " + color);
+    });
+    */
 
-    socket.on('playerUpdate', function(id,x,y,size){
-        Game.entities[id] = [x,y,size]
+    socket.on('playerUpdate', function(id,x,y,size, color){
+        Game.entities[id] = [x,y,size, color]
     });
     // player is attempting to eat a piece of grass
     socket.on('grassUpdate', function(id){
@@ -56,6 +62,7 @@ Game.initialize = function() {
 };
 
 Game.run = (function() {
+    console.log('running game loop');
     var loops = 0, skipTicks = 1000 / Game.fps,
         maxFrameSkip = 10,
         nextGameTick = (new Date).getTime();
@@ -73,6 +80,15 @@ Game.run = (function() {
 
 // Start the game loop
 Game.initialize();
-Game._intervalId = setInterval(Game.run, 0);
+Game._intervalId = setInterval(Game.run, 1);
 
+function randomColor(brightness){
+    function randomChannel(brightness){
+        var r = 255-brightness;
+        var n = 0|((Math.random() * r) + brightness);
+        var s = n.toString(16);
+        return (s.length==1) ? '0'+s : s;
+    }
+    return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
+}
 

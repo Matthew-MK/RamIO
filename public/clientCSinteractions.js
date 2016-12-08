@@ -1,12 +1,14 @@
 // setup my socket client
-(function () {
-	var socket = io();
-})();
+var socket = io();
 
-socket.on('PlayerSetup', function (id, coords) {
+
+socket.on('PlayerSetup', function (id, coords, color) {
     Player.id = id;
     Player.x = coords[0];
     Player.y = coords[1];
+    Player.color = color;
+    // debugging player connection
+    // socket.emit('setup', Player.id, Player.x, Player.y, Player.color);
 });
 
 socket.on('GameUpdate', function (entities, grass) {
