@@ -13,8 +13,8 @@ socket.on('PlayerSetup', function (id, coords, color) {
 });
 
 socket.on('GameUpdate', function (entities, grass) {
-    drawMinimap(entities);
-    drawMap(entities, grass);
+    Game.entities = entities;
+    Game.grass = grass;
 });
 
 //TODO make growth more dynamic, not just by one

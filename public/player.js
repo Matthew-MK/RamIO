@@ -23,6 +23,6 @@ var moveRam = function (e) {
 
 function updateCoordinates() {
     Player.angle = Math.atan(Math.abs((Player.mouseY-Player.y) / (Player.mouseX-Player.x)));
-    Player.x = Player.speed * Math.cos(Player.angle);
-    Player.y = Player.speed * Math.sin(Player.angle);
+    Player.x += Player.speed * Math.cos(Player.angle);
+    Player.y += Player.speed * Math.sin(Player.angle);
 };

@@ -7,7 +7,7 @@ var Game = {};
 var buffer = 50;
 
 // fps denotes times game will be updated per second and sent out to server
-Game.fps = 30;
+Game.fps = 45;
 Game.width = 1000;
 Game.height = 1000;
 
@@ -17,27 +17,28 @@ Game.initialize = function() {
     //TODO add visuals for ending the game
 };
 
-Game.run = (function() {
+Game.run = function() {
+    console.log('running game loop');
     var loops = 0, skipTicks = 1000 / Game.fps,
         maxFrameSkip = 10,
         nextGameTick = (new Date).getTime();
+    loops = 0;
 
-    return function() {
-        loops = 0;
-
-        while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
-            // update the player's coordinates
-            updateCoordinates();
-            socket.emit('PlayerUpdate', Player.id, Player.x, Player.y, Player.size, Player.color);
-            nextGameTick += skipTicks;
-            loops++;
-        }
-    };
-})();
+    while ((new Date).getTime() > nextGameTick) {
+        updateCoordinates();
+        socket.emit('PlayerUpdate', Player.id, Player.x, Player.y, Player.size, Player.color);
+        console.log ( 'sent player location to server' );
+        nextGameTick += skipTicks;
+        loops++;
+    }
+    // draw as often as possible, only send updates fps a second
+    drawMinimap(Game.entities);
+    drawMap(Game.entities, Game.grass);
+};
 
 // Start the game loop
 Game.initialize();
-Game._intervalId = setInterval(Game.run, 0);
+setInterval(Game.run, 1000/Game.fps);
 
 /*--------- Minimap drawing functionality --------*/
 var drawMinimap = function(players) {
