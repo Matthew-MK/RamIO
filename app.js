@@ -14,26 +14,30 @@ io.on('connection', function(socket){
     // Assign id between 1 and 1000
     var id = Math.floor(Math.random()*1000 + 1);
     // x,y coordinates
-    var coords = [Math.floor(Math.random()*1000), Math.floor(Math.random()*1000)];
+    var coords = [Math.floor(Math.random()*Game.width), Math.floor(Math.random()*Game.height)];
     var color = randomColor(150);
-    // Send an id and coordinates for the player to spawn at
-    socket.emit('PlayerSetup', id, coords, color);
     Game.entities[id] = [coords[0],coords[1],10, color];
+    // Send an id and coordinates for the player to spawn at
+    socket.emit('PlayerSetup', { id: id, coords: coords, color: color, entities: Game.entities,grass: Game.grass });
     /* debugging player connection
     socket.on('setup', function (id,x,y,color) {
         console.log(id + " setup at " + x + "," + y + " with color " + color);
     });
     */
 
-    socket.on('playerUpdate', function(id,x,y,size, color){
-        Game.entities[id] = [x,y,size, color]
+    socket.on('PlayerUpdate', function(data){
+        socket.broadcast.emit('PlayerUpdate', data);
+        Game.entities[data.id] = [data.x, data.y, data.size, data.color];
     });
     // player is attempting to eat a piece of grass
-    socket.on('grassUpdate', function(id){
-        if (Game.grass[id]) {
+    socket.on('EatRequest', function(data){
+        if (Game.grass[data.id].x == data.x && Game.grass[data.id].y == data.y) {
             // tell client they succesfully ate grass
-            socket.emit('grow');
-            Game.grass[id] = false;
+            socket.emit('EatGrass');
+            Game.grass[data.id] = false;
+            // If grass has been eaten in a verified manner, replace that piece of grass with another. Send to ALL
+            var replacementgrass = generateGrass();
+            io.emit('GrassUpdate', {id: data.id, x: replacementgrass.x, y: replacementgrass.y});
         }
     });
     socket.on('disconnect', function(){
@@ -51,26 +55,32 @@ var Game = {};
 
 // fps denotes times game will be updated per second and sent out to players
 Game.fps = 30;
-Game.width = 1000;
-Game.height = 1000;
+Game.width = 10000;
+Game.height = 10000;
+Game.numGrass = 500;
 
 Game.initialize = function() {
-    this.entities = [];
-    this.grass = [];
+    Game.entities = [];
+    Game.grass = [];
+    var i;
+    for (i = 0; i < Game.numGrass; i++) {
+        Game.grass.push(generateGrass());
+    }
     //TODO add conditions for ending the game
     this.gamestart = (new Date).getTime;
 };
-
+var startrunning = true;
 Game.run = function() {
-    console.log('running game loop');
+    // console.log('running game loop');
     var loops = 0, skipTicks = 1000 / Game.fps,
-        maxFrameSkip = 10,
+        maxFrameSkip = 10;
+        if (startrunning) {
         nextGameTick = (new Date).getTime();
-        loops = 0;
+        startrunning = false;
+    }
 
         while ((new Date).getTime() > nextGameTick) {
-            io.emit('GameUpdate', this.entities,this.grass);
-            console.log('running game loop');
+            // console.log('emitted game update');
             nextGameTick += skipTicks;
             loops++;
         }
@@ -88,5 +98,12 @@ function randomColor(brightness){
         return (s.length==1) ? '0'+s : s;
     }
     return '#' + randomChannel(brightness) + randomChannel(brightness) + randomChannel(brightness);
+}
+
+function generateGrass () {
+    var coords = {};
+    coords.x = Math.floor(Math.random()*Game.width);
+    coords.y = Math.floor(Math.random()*Game.height);
+    return coords;
 }
 
