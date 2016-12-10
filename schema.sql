@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS ramio;
-CREATE DATABASE ramio;
-
-\c ramio;
+--DROP DATABASE IF EXISTS ramio;
+--CREATE DATABASE ramio;
+--
+--\c ramio;
 
 CREATE TABLE IF NOT EXISTS players (
     pid SERIAL PRIMARY KEY,
