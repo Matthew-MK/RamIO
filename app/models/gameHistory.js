@@ -2,6 +2,8 @@
 // define the model for GameHistory
 
 var User = sequelize.import('../app/models/user');
+var GameHistory = sequelize.import('../app/models/gameHistory');
+GameHistory.sync();
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define('gameHistory', {
