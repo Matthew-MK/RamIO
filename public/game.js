@@ -62,7 +62,6 @@ function drawMinimap(players) {
     var scaleY = minimap.height / Game.height;
     for (var key in players) {
         if (players[key] != null && Player.id != key) {
-            //TODO make sure that scaleX is the correct size
             drawMinimapCircle(getRadius(players[key][2]) * scaleX,players[key][0] * scaleX,players[key][1] * scaleY,'red');
         }
         else if (Player.id == key) {
