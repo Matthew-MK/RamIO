@@ -1,5 +1,5 @@
 // app/routes.js
-var game = require('../game');
+var game = require('../app');
 var path = require('path');
 
 module.exports = function(app, passport, io) {
