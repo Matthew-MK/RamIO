@@ -143,7 +143,6 @@ function drawMap(players,grass) {
                     grass[i] = null;
                 }
                 else {
-                    //TODO make grass dynamic. Remove all instances of GRASS_SIZE
                     drawCircle(GRASS_SIZE, Width / 2 + offsetX, Height / 2 + offsetY, 'green');
                 }
             }
