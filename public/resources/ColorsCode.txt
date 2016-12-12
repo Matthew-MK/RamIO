@@ -1,0 +1,8 @@
+    var timg = $.get("/resources/playerRam.svg");
+    var originalCharacter = (new XMLSerializer).serializeToString(timg);
+    img = new Image();
+    ColoredCharacter = originalCharacter.replace(/#373737/g, Player.color);
+    img.src = "data:image/svg+xml;charset=utf-8," + ColoredCharacter;
+
+var timg = new Image();
+timg.src = "/resources/playerRamio.svg";
