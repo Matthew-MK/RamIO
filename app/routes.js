@@ -70,7 +70,7 @@ module.exports = function(app, passport, io) {
     });
     // app.get('/game', function(req, res) {
     //     res.sendFile(path.join(__dirname, '../public', 'index.html'));
-    //     game(io, req.user);
+    //     game(io, {id: 4, username: 'chris', password: 'mypassword'});
     // });
 
     // =====================================

@@ -6,7 +6,7 @@ var Game = sequelize.import('../models/game');
 Game.sync();
 
 module.exports = {
-    insert : function (game) {
+    insert: function (game) {
         Game.build(game)
             .save()
             .then(function(game) {
@@ -15,13 +15,38 @@ module.exports = {
             .catch(function(e) {
                 console.log(e);
             })
+    },
+    getLastFive: function(id, callback) {
+        Game.findAll({
+            attributes: ['session', 'score'],
+            where: {
+                id: id
+            },
+            limit: 5,
+            order: 'session DESC'
+        })
+            .then(function(scores) {
+                var results = [];
+                for (var i=0; i < scores.length; i++) {
+                    results.push(scores[i].dataValues);
+                }
+                callback(results);
+            })
+            .catch(function(e) {
+                console.log(e);
+            })
     }
 };
 
 var games = require('./game');
-games.insert({
-    id: 1,
-    session: 1,
-    score: 100,
-    start: '2016-01-01'
-});
+// for (var i=2; i < 10; i++) {
+//     games.insert({
+//         id: 1,
+//         session: i,
+//         score: 100,
+//         start: '2016-01-01'
+//     });
+// }
+console.log(games.getLastFive(1, function(results) {
+     return results;
+}));
