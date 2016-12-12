@@ -192,12 +192,12 @@ function sortLeaderboard () {
 }
 
 function updateLeaderboard() {
-    for (var key in entities) {
-        if (entities[key] != null) {
-            addLeaderboard(entities[key]);
+    for (var key in Game.entities) {
+        if (Game.entities[key] != null) {
+            addLeaderboard(Game.entities[key]);
         }
     }
-    sortLeaderboard(entities);
+    sortLeaderboard(Game.entities);
 }
 
 window.setInterval(function(){
