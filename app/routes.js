@@ -55,6 +55,11 @@ module.exports = function(app, passport, io) {
             user: req.user
         });
     });
+    // app.get('/profile', function(req, res) {
+    //     res.render('profile.ejs', {
+    //         user: {id: 24, username: 'griffin', password: 'mypassword'}
+    //     });
+    // });
 
     // =====================================
     // GAME ==============================
@@ -63,6 +68,10 @@ module.exports = function(app, passport, io) {
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
         game(io, req.user);
     });
+    // app.get('/game', function(req, res) {
+    //     res.sendFile(path.join(__dirname, '../public', 'index.html'));
+    //     game(io, req.user);
+    // });
 
     // =====================================
     // LOGOUT ==============================
