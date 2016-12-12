@@ -23,7 +23,7 @@ module.exports = function(app, passport, io) {
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/game',
+        successRedirect: '/profile',
         failureRedirect: '/login',
         failureFlash: true
     }));
@@ -51,9 +51,6 @@ module.exports = function(app, passport, io) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        // app.get('/', function(req, res){
-        //     res.sendFile(__dirname + '/public/index.html');
-        // });
         res.render('profile.ejs', {
             user: req.user
         });
@@ -63,9 +60,8 @@ module.exports = function(app, passport, io) {
     // GAME ==============================
     // =====================================
     app.get('/game', isLoggedIn, function(req, res) {
-        // app.use(express.static('../public'));
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
-        game(io);
+        game(io, req.user);
     });
 
     // =====================================

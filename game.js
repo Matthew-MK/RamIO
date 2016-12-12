@@ -12,7 +12,7 @@
     // });
 
 
-module.exports = function(io) {
+module.exports = function(io, user) {
     io.on('connection', function (socket) {
         console.log('a user connected');
         // Assign id between 1 and 1000
