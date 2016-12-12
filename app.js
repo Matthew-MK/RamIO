@@ -11,6 +11,8 @@
     //   res.sendFile(__dirname + '/public/index.html');
     // });
 
+var gameHistory = require('./app/controllers/game');
+
 
 module.exports = function(io, user) {
     io.on('connection', function(socket){

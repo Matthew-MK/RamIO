@@ -177,15 +177,12 @@ function addLeaderboard (user) {
             leaderboard.push({username: user[5], size: user[2]});
             return
         }
-        if (leaderboard[i] == null) {
-            continue
+        if (i == leaderboard.length) {
+            leaderboard.push({username: user[5], size: user[2]});
         }
         if (leaderboard[i].username == user[5]) {
             leaderboard[i] = {username: user[5], size: user[2]};
             return
-        }
-        if (i = leaderboard.length - 1) {
-            leaderboard.push({username: user[5], size: user[2]});
         }
     }
 }

@@ -48,5 +48,5 @@ var games = require('./game');
 //     });
 // }
 console.log(games.getLastFive(1, function(results) {
-     return results;
+     console.log(results);
 }));
