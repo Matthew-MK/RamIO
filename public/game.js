@@ -3,14 +3,16 @@
  */
 //Client-side game logic
 var Game = {};
+var leaderboard = [];
+
 // curently static grass patch size
 var GRASS_SIZE = 10;
 var SVG_MULTIPLIER = 1.6;
 
 // fps denotes times game will be updated per second and sent out to server
 Game.fps = 45;
-Game.width = 10000;
-Game.height = 10000;
+Game.width = 5000;
+Game.height = 5000;
 
 Game.initialize = function() {
     this.entities = [];
@@ -36,8 +38,11 @@ Game.run = function() {
 
     while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
         updateCoordinates();
+        updateLeaderboard();
         //TODO: implement angle in PlayerUpdate
-        socket.emit('PlayerUpdate', { id: Player.id, x: Player.x, y: Player.y, size: Player.size, color: Player.color, angle: Player.angle });
+        socket.emit('PlayerUpdate', { id: Player.id, username: Player.username, x: Player.x, y: Player.y, size: Player.size, color: Player.color, angle: Player.angle });
+        // Track player max size for post-death screen
+        Player.maxSize = Math.max(Player.size, Player.maxSize);
         // console.log ( 'sent player location to server' );
         nextGameTick += skipTicks;
         loops++;
@@ -57,7 +62,6 @@ function drawMinimap(players) {
     var scaleY = minimap.height / Game.height;
     for (var key in players) {
         if (players[key] != null && Player.id != key) {
-            //TODO make sure that scaleX is the correct size
             drawMinimapCircle(getRadius(players[key][2]) * scaleX,players[key][0] * scaleX,players[key][1] * scaleY,'red');
         }
         else if (Player.id == key) {
@@ -139,7 +143,6 @@ function drawMap(players,grass) {
                     grass[i] = null;
                 }
                 else {
-                    //TODO make grass dynamic. Remove all instances of GRASS_SIZE
                     drawCircle(GRASS_SIZE, Width / 2 + offsetX, Height / 2 + offsetY, 'green');
                 }
             }
@@ -166,5 +169,42 @@ function rotateAndPaintImage ( context, image, angleInRad , positionX, positionY
     context.rotate( -angleInRad );
     context.translate( -positionX, -positionY );
 }
+
+function addLeaderboard (user) {
+    for (var i=0; i <= leaderboard.length; i++) {
+        if (i = 10) {return}
+        if (leaderboard.length == 0) {
+            leaderboard.push({username: user[5], size: user[2]});
+            return
+        }
+        if (leaderboard[i].username == user.username) {
+            leaderboard[i] = {username: user[5], size: user[2]};
+            return
+        }
+        if (i = leaderboard.length - 1) {
+            leaderboard.push({username: user[5], size: user[2]});
+        }
+    }
+}
+
+function sortLeaderboard () {
+    leaderboard.sort(function(a, b){return b.size-a.size});
+}
+
+function updateLeaderboard() {
+    for (var key in entities) {
+        if (entities[key] != null) {
+            addLeaderboard(entities[key]);
+        }
+    }
+    sortLeaderboard(entities);
+}
+
+window.setInterval(function(){
+    $("#scores ol").empty();
+    for (var i = 0; i < leaderboard.length; i++) {
+        $("#scores ol").append('<li>' + leaderboard[i].username + ': ' + leaderboard[i].size + '</li>');
+    }
+}, 1000);
 
 

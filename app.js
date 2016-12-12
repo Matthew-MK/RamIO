@@ -15,14 +15,15 @@
 module.exports = function(io, user) {
     io.on('connection', function(socket){
         console.log('a user connected');
-        // Assign id between 1 and 1000
-        var id = Math.floor(Math.random()*1000 + 1);
+        // Take id from authentication ID
+        var id = user.id;
+        var username = user.username;
         // x,y coordinates
         var coords = [Math.floor(Math.random()*Game.width), Math.floor(Math.random()*Game.height)];
         var color = randomColor(150);
         Game.entities[id] = [coords[0],coords[1],10, color];
         // Send an id and coordinates for the player to spawn at
-        socket.emit('PlayerSetup', { id: id, coords: coords, color: color, entities: Game.entities,grass: Game.grass });
+        socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities,grass: Game.grass });
         /* debugging player connection
          socket.on('setup', function (id,x,y,color) {
          console.log(id + " setup at " + x + "," + y + " with color " + color);
@@ -31,7 +32,7 @@ module.exports = function(io, user) {
 
         socket.on('PlayerUpdate', function(data){
             socket.broadcast.emit('PlayerUpdate', data);
-            Game.entities[data.id] = [data.x, data.y, data.size, data.color, data.angle];
+            Game.entities[data.id] = [data.x, data.y, data.size, data.color, data.angle, data.username];
         });
         // player is attempting to eat a piece of grass
         socket.on('EatRequest', function(data){
@@ -59,9 +60,9 @@ module.exports = function(io, user) {
 
 // fps denotes times game will be updated per second and sent out to players
     Game.fps = 30;
-    Game.width = 10000;
-    Game.height = 10000;
-    Game.numGrass = 500;
+    Game.width = 5000;
+    Game.height = 5000;
+    Game.numGrass = 200;
 
     Game.initialize = function() {
         Game.entities = [];

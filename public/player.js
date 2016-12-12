@@ -14,13 +14,15 @@ img.src = "/resources/playerRamio.svg";
 enemyRam = new Image();
 enemyRam.src = "/resources/enemyRam.svg";
 
-Player.initialize = function(id, position, color) {
+Player.initialize = function(id, position, color, username) {
     this.id = id;
     this.x = position[0];
     this.y = position[1];
     this.color = color;
     this.mouseX = 800;
     this.mouseY = 450;
+    this.username = username;
+    this.maxSize = Player.size;
 };
 
 //Listening for mouse position changes
