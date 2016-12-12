@@ -46,7 +46,7 @@ function updateCoordinates() {
     Player.angle = Math.atan2( Player.mouseY-c.height/2, Player.mouseX-c.width/2 )/**(180/Math.PI)*/;
     Player.x += Player.speed * Math.cos(Player.angle);
     Player.y += Player.speed * Math.sin(Player.angle);
-    Game.entities[Player.id] = [Player.x, Player.y, Player.size, Player.color];
+    Game.entities[Player.id] = [Player.x, Player.y, Player.size, Player.color,Player.radius, Player.username];
 }
 
 //TODO: How do we want to scale radius?

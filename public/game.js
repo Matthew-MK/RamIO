@@ -172,12 +172,15 @@ function rotateAndPaintImage ( context, image, angleInRad , positionX, positionY
 
 function addLeaderboard (user) {
     for (var i=0; i <= leaderboard.length; i++) {
-        if (i = 10) {return}
+        if (i == 10) {return}
         if (leaderboard.length == 0) {
             leaderboard.push({username: user[5], size: user[2]});
             return
         }
-        if (leaderboard[i].username == user.username) {
+        if (leaderboard[i] == null) {
+            continue
+        }
+        if (leaderboard[i].username == user[5]) {
             leaderboard[i] = {username: user[5], size: user[2]};
             return
         }

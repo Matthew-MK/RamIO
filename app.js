@@ -21,9 +21,9 @@ module.exports = function(io, user) {
         // x,y coordinates
         var coords = [Math.floor(Math.random()*Game.width), Math.floor(Math.random()*Game.height)];
         var color = randomColor(150);
-        Game.entities[id] = [coords[0],coords[1],10, color];
+        Game.entities[id] = [coords[0],coords[1],10, color, username];
         // Send an id and coordinates for the player to spawn at
-        socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities,grass: Game.grass });
+        socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities, grass: Game.grass });
         /* debugging player connection
          socket.on('setup', function (id,x,y,color) {
          console.log(id + " setup at " + x + "," + y + " with color " + color);
