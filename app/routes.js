@@ -1,5 +1,8 @@
 // app/routes.js
-module.exports = function(app, passport) {
+var game = require('../game');
+var path = require('path');
+
+module.exports = function(app, passport, io) {
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -20,7 +23,7 @@ module.exports = function(app, passport) {
 
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/profile',
+        successRedirect: '/game',
         failureRedirect: '/login',
         failureFlash: true
     }));
@@ -48,9 +51,21 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
+        // app.get('/', function(req, res){
+        //     res.sendFile(__dirname + '/public/index.html');
+        // });
         res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
+            user: req.user
         });
+    });
+
+    // =====================================
+    // GAME ==============================
+    // =====================================
+    app.get('/game', isLoggedIn, function(req, res) {
+        // app.use(express.static('../public'));
+        res.sendFile(path.join(__dirname, '../public', 'index.html'));
+        game(io);
     });
 
     // =====================================
