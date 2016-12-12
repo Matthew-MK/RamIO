@@ -4,7 +4,7 @@ var socket = io();
 
 socket.on('PlayerSetup', function (data) {
     Game.initialize();
-    Player.initialize(data.id, data.coords, data.color);
+    Player.initialize(data.id, data.coords, data.color, data.username);
     Game.entities = data.entities;
     Game.grass = data.grass;
     // Start the game loop
@@ -15,7 +15,7 @@ socket.on('PlayerSetup', function (data) {
 });
 
 socket.on('PlayerUpdate', function(data){
-    Game.entities[data.id] = [data.x, data.y, data.size, data.color, data.radius];
+    Game.entities[data.id] = [data.x, data.y, data.size, data.color, data.radius, data.username];
 });
 
 //TODO make growth more dynamic, not just by one
