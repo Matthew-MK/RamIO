@@ -83,7 +83,7 @@ module.exports = function(passport) {
                     }
                 })
                 .catch(function (e) {
-                    done(null, false, req.flash('signupMessage', e));
+                    done(null, false, req.flash('signupMessage', e.message));
                 })
 
         }));
@@ -109,7 +109,7 @@ module.exports = function(passport) {
                     }
                 })
                 .catch(function(e) {
-                    done(null, false, req.flash('loginMessage', e));
+                    done(null, false, req.flash('loginMessage', e.name, e.message));
                 });
         }));
 

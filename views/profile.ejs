@@ -8,6 +8,9 @@
     <style>
         body        { padding-top:80px; word-wrap:break-word; }
     </style>
+    <!-- loads ESJ chart file to draw chart for player game history information -->
+    <script src="./EJSCharts-master/EJSChart.min.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -35,6 +38,40 @@
                 </p>
 
             </div>
+
+            <!-- placeholder to draw ESJ chart for game history chart -->
+            <div id="ProfileGameHistory"></div>
+
+            <!-- constructs the ESJ chart object, filled with a JSON string of form
+                 {"session":"INTEGER VALUE", "highScore":"INTEGER VALUE"} -->
+            <script type="text/javascript">
+                ProfileGameHistoryJSON = [ {session: 1, highScore: 100}, {session: 2, highScore: 1000},
+                                           {session: 3, highScore: 50}, {session: 4, highScore: 1750} ];
+                if(ProfileGameHistoryJSON.length == 0){
+                    document.write("Play a few games to see your high scores as a cool graph! :D")
+                } else {
+
+                    var historyChart = new EJSC.Chart("ProfileGameHistory", {
+                        title: "Games History",
+                        axis_bottom: {caption: "Session"},
+                        axis_left: {caption: "Score/Size"},
+                        auto_zoom: 'y',
+                        auto_find_point_by_x: true
+                    });
+
+
+                    historyChart.addSeries(new EJSC.LineSeries(
+                        new EJSC.JSONStringDataHandler(ProfileGameHistoryJSON), {
+                            title: "Score/Size",
+                            padding: {x_min: 0, y_min: 1, x_max: 0, y_max: 1}
+                        }
+                    ));
+                }
+
+
+            </script>
+
+
         </div>
 
     </div>
