@@ -74,7 +74,7 @@ module.exports = function(io, user) {
             var id = user.id;
             var username = user.username;
             // x,y coordinates
-            var coords = [Math.floor(Math.random()Game.width), Math.floor(Math.random()Game.height)];
+            var coords = [Math.floor(Math.random()*Game.width), Math.floor(Math.random()*Game.height)];
             var color = randomColor(150);
             Game.entities[id] = [coords[0],coords[1],10, color, username];
             // Send an id and coordinates for the player to spawn at
