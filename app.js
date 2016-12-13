@@ -84,8 +84,8 @@ module.exports = function(io, user) {
 
 // fps denotes times game will be updated per second and sent out to players
     Game.fps = 30;
-    Game.width = 5000;
-    Game.height = 5000;
+    Game.width = 2500;
+    Game.height = 2500;
     Game.numGrass = 200;
     Game.numMissiles = 50;
 

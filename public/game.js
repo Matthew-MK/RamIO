@@ -8,6 +8,7 @@ var MISSILE_SIZE = 10;
 var MISSILE_SPEED = 10;
 var KILL_POINTS = 100;
 var HIT_POINTS = 10;
+var HIT_REDUCTION = 20;
 
 // curently static grass patch size
 var GRASS_SIZE = 10;
@@ -139,7 +140,7 @@ function drawMap(players,grass, missiles) {
             if (Math.abs(offsetX) < Width/2 + MISSILE_SIZE && Math.abs(offsetY) < Height/2 + MISSILE_SIZE) {
                 if (Game.firedMissiles[i].playerid != Player.id && Math.abs(offsetX) < Player.radius + MISSILE_SIZE && Math.abs(offsetY) < Player.radius + MISSILE_SIZE) {
                     //TODO: Make damage dynamic
-                    Player.size -= 5*MISSILE_SIZE;
+                    Player.size -= HIT_REDUCTION;
                     Game.firedMissiles[i] = null;
                     socket.emit('MissileHit', Game.firedMissiles[i]);
                     if(Player.size <= 0) {

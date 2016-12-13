@@ -6,7 +6,7 @@ MOUSEFREQ = 50;
 RADIUS_FACTOR = .80;
 
 Player.size = 50;
-Player.speed = 5;
+Player.speed = 3;
 Player.radius = getRadius(Player.size);
 Player.missilesCount = 0;
 Player.angle = 0;

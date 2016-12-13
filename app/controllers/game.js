@@ -42,13 +42,13 @@ module.exports = {
     }
 };
 
-var games = require('./game');
-// // for (var i=2; i < 10; i++) {
-// //     games.insert({
-// //         id: 1,
-// //         session: i,
-// //         score: 100,
-// //         start: '2016-01-01'
-// //     });
-// // }
+// var games = require('./game');
+// for (var i=2; i < 10; i++) {
+//     games.insert({
+//         id: 1,
+//         session: i,
+//         score: i * 100,
+//         start: '2016-01-01'
+//     });
+// }
 // games.getLastFive(1);
