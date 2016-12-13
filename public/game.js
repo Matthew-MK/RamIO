@@ -278,8 +278,11 @@ function updateMissiles() {
 function processDeath(reason) {
     //TODO: trigger post-death screen
     //reason.playerid is playerid of player who killed me
-    var death = {id: Player.id, reason: reason.playerid}
+    var death = {id: Player.id, reason: reason.playerid};
     socket.emit('Die', death);
+    //set speed to 0 on death
+    Player.speed = 0;
     Player.deaths.push(Player.maxSize);
+
 }
 
