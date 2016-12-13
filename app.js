@@ -11,7 +11,7 @@
     //   res.sendFile(__dirname + '/public/index.html');
     // });
 
-var gameHistory = require('./app/controllers/game');
+// var gameHistory = require('./app/controllers/game');
 
 
 module.exports = function(io, user) {
@@ -68,6 +68,17 @@ module.exports = function(io, user) {
         });
         socket.on('Die', function (data) {
             io.emit('Die', data);
+        });
+        socket.on('RequestRespawn', function () {
+            // Take id from authentication ID
+            var id = user.id;
+            var username = user.username;
+            // x,y coordinates
+            var coords = [Math.floor(Math.random()Game.width), Math.floor(Math.random()Game.height)];
+            var color = randomColor(150);
+            Game.entities[id] = [coords[0],coords[1],10, color, username];
+            // Send an id and coordinates for the player to spawn at
+            socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities, grass: Game.grass, missiles: Game.missiles });
         });
         socket.on('disconnect', function(){
             console.log('user disconnected');

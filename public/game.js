@@ -281,14 +281,44 @@ function updateMissiles() {
 }
 
 //TODO: All current reasons are just missiles
+// function processDeath(reason) {
+//     //TODO: trigger post-death screen
+//     //reason.playerid is playerid of player who killed me
+//     var death = {id: Player.id, reason: reason.playerid};
+//     socket.emit('Die', death);
+//     //set speed to 0 on death
+//     Player.speed = 0;
+//     Player.deaths.push(Player.maxSize);
+//
+// }
 function processDeath(reason) {
     //TODO: trigger post-death screen
+    var respawned = false;
     //reason.playerid is playerid of player who killed me
     var death = {id: Player.id, reason: reason.playerid};
     socket.emit('Die', death);
     //set speed to 0 on death
     Player.speed = 0;
-    Player.deaths.push(Player.maxSize);
+    Player.deaths.push({life: Player.deaths.length, highScore: Player.maxSize});
+    addDeathButton();
 
+    $("deathButton").click(function(){ requestRespawn(); });
+
+    //Do player death screen: playerDeath, deathContext
+
+
+}
+
+function addDeathButton() {
+    var r=$('deathButton').attr({
+        type: "button",
+        id: "Respawn",
+        value: 'Respawn'
+    });
+    $("container").append(r);
+}
+
+function requestRespawn() {
+    socket.emit("RequestRespawn");
 }
 
