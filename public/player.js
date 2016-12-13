@@ -8,6 +8,8 @@ RADIUS_FACTOR = .80;
 Player.size = 50;
 Player.speed = 5;
 Player.radius = getRadius(Player.size);
+Player.missilesCount = 0;
+Player.angle = 0;
 img = new Image();
 img.src = "/resources/playerRamio.svg";
 
@@ -27,6 +29,21 @@ Player.initialize = function(id, position, color, username) {
 
 //Listening for mouse position changes
 window.addEventListener('mousemove', mouseHandler, false);
+
+// listens for clicks to fire missile
+window.addEventListener('click', clickHandler, false);
+// TODO functionality for firing missiles done here or somewhere else?
+function clickHandler(e){
+    if(Player.missilesCount > 0){
+        var id = Math.random()*10000;
+        var firedMissile = {id: id, x: Player.x, y: Player.y, angle: Player.angle};
+        Game.firedMissiles.push(firedMissile);
+        socket.emit('MissileEvent', firedMissile);
+        Player.missilesCount--;
+    } else {
+        // do nothing
+    }
+}
 
 function mouseHandler(e) {
     getMousePos(c, e)

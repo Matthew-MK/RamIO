@@ -4,6 +4,8 @@
 //Client-side game logic
 var Game = {};
 var leaderboard = [];
+var MISSILE_SIZE = 10;
+var MISSILE_SPEED = 10;
 
 // curently static grass patch size
 var GRASS_SIZE = 10;
@@ -17,6 +19,8 @@ Game.height = 5000;
 Game.initialize = function() {
     this.entities = [];
     this.grass = [];
+    this.missiles = [];
+    this.firedMissiles = [];
     //TODO add visuals for ending the game
 
     minimap = document.getElementById("minimap");
@@ -38,6 +42,7 @@ Game.run = function() {
 
     while ((new Date).getTime() > nextGameTick && loops < maxFrameSkip) {
         updateCoordinates();
+        updateMissiles();
         updateLeaderboard();
         //TODO: implement angle in PlayerUpdate
         socket.emit('PlayerUpdate', { id: Player.id, username: Player.username, x: Player.x, y: Player.y, size: Player.size, color: Player.color, angle: Player.angle });
@@ -50,7 +55,7 @@ Game.run = function() {
     // draw as often as possible, only send updates fps a second
     // console.log ( 'drawing to canvas' );
     drawMinimap(Game.entities);
-    drawMap(Game.entities, Game.grass);
+    drawMap(Game.entities, Game.grass, Game.missiles);
 };
 
 /*--------- Minimap drawing functionality --------*/
@@ -79,7 +84,7 @@ function drawMinimapCircle(size, xPos, yPos, color) {
 /*------------------------------------------------*/
 
 /*----------- Map drawing functionality ----------*/
-function drawMap(players,grass) {
+function drawMap(players,grass, missiles) {
     var Width = c.width;
     var Height = c.height;
     //TODO have spacing be controlled based on the size of the player
@@ -124,6 +129,24 @@ function drawMap(players,grass) {
             }
         }
     }
+    // Render FIRED missiles
+    for (var i = 0; i < Game.firedMissiles.length; i++) {
+        if (Game.firedMissiles[i] != null) {
+            var offsetX = Game.firedMissiles[i].x - Player.x;
+            var offsetY = Game.firedMissiles[i].y - Player.y;
+            if (Math.abs(offsetX) < Width/2 + MISSILE_SIZE && Math.abs(offsetY) < Height/2 + MISSILE_SIZE) {
+                drawCircle(MISSILE_SIZE, Width/2 + offsetX, Height/2 + offsetY, 'blue');
+                //TODO Make this a function?
+                // rotateAndPaintImage(ctx, img, Player.angle, Width/2 - Player.radius/2, Height/2 - Player.radius/2, Player.radius, Player.radius );
+                // ctx.translate(Width/2 + offsetX, Height/2 + offsetY);
+                // ctx.rotate(players[key][4] - Math.PI/2);
+                // ctx.drawImage(enemyRam,-radius,-Player.radius,2*players[key][3],2*players[key][3]);
+                // ctx.rotate(-players[key][4] + Math.PI/2);
+                // ctx.translate(-Width/2 - offsetX, -Height/2 - offsetY);
+
+            }
+        }
+    }
     //TODO Make this a function?
     // rotateAndPaintImage(ctx, img, Player.angle, Width/2 - Player.radius/2, Height/2 - Player.radius/2, Player.radius, Player.radius );
     ctx.translate(Width/2, Height/2);
@@ -144,6 +167,23 @@ function drawMap(players,grass) {
                 }
                 else {
                     drawCircle(GRASS_SIZE, Width / 2 + offsetX, Height / 2 + offsetY, 'green');
+                }
+            }
+        }
+    }
+    // when a player gets close enough, pick up the missile
+    var j;
+    for (j = 0; j < missiles.length; j++) {
+        if (missiles[j] != null) {
+            var offsetX = missiles[j].x - Player.x;
+            var offsetY = missiles[j].y - Player.y;
+            if (Math.abs(offsetX) < Width / 2 + MISSILE_SIZE && Math.abs(offsetY) < Height / 2 + MISSILE_SIZE) {
+                if (Math.abs(offsetX) < Player.radius + MISSILE_SIZE && Math.abs(offsetY) < Player.radius + MISSILE_SIZE) {
+                    socket.emit('PickupRequest', {id: j, x: missiles[j].x, y: missiles[j].y});
+                    missiles[j] = null;
+                }
+                else {
+                    drawCircle(MISSILE_SIZE, Width / 2 + offsetX, Height / 2 + offsetY, 'blue');
                 }
             }
         }
@@ -207,4 +247,18 @@ window.setInterval(function(){
     }
 }, 1000);
 
+function updateMissiles() {
+    if (Game.firedMissiles.length == 0) {
+        return
+    }
+    for (var i = 0; i < Game.firedMissiles.length; i++) {
+        if (Game.firedMissiles[i] != null) {
+            if (Game.firedMissiles[i].x > Game.width || Game.firedMissiles[i].y > Game.height) {
+                Game.firedMissiles[i] = null;
+            }
+            Game.firedMissiles[i].x += MISSILE_SPEED * Math.cos(Game.firedMissiles[i].angle);
+            Game.firedMissiles[i].y += MISSILE_SPEED * Math.sin(Game.firedMissiles[i].angle);
+        }
+    }
+}
 

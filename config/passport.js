@@ -10,6 +10,7 @@ var pg = require('pg').native;
 var pghstore = require('pg-hstore');
 var sequelize = new Sequelize(configDB.url);
 
+// var game = require('../app/controllers/game');
 var User = sequelize.import('../app/models/user');
 // User.sync({force: true});
 User.sync();
@@ -105,6 +106,9 @@ module.exports = function(passport) {
                     } else if (!user.validPassword(password)) {
                         done(null, false, req.flash('loginMessage', 'Wrong password'));
                     } else {
+                        // game.getLastFive(user.id, function(results) {
+                        //     done(null, user, results);
+                        // });
                         done(null, user);
                     }
                 })

@@ -16,7 +16,7 @@ module.exports = {
                 console.log(e);
             })
     },
-    getLastFive: function(id, callback) {
+    getLastFive: function(id) {
         Game.findAll({
             attributes: ['session', 'score'],
             where: {
@@ -25,12 +25,12 @@ module.exports = {
             limit: 5,
             order: 'session DESC'
         })
-            .then(function(scores) {
-                var results = [];
-                for (var i=0; i < scores.length; i++) {
-                    results.push(scores[i].dataValues);
-                }
-                callback(results);
+            .then(function(scores, req) {
+
+                req.results = scores.map(function(s) {
+                    return s.dataValues;
+                });
+                console.log(req.results);
             })
             .catch(function(e) {
                 console.log(e);
@@ -39,14 +39,12 @@ module.exports = {
 };
 
 var games = require('./game');
-// for (var i=2; i < 10; i++) {
-//     games.insert({
-//         id: 1,
-//         session: i,
-//         score: 100,
-//         start: '2016-01-01'
-//     });
-// }
-console.log(games.getLastFive(1, function(results) {
-     console.log(results);
-}));
+// // for (var i=2; i < 10; i++) {
+// //     games.insert({
+// //         id: 1,
+// //         session: i,
+// //         score: 100,
+// //         start: '2016-01-01'
+// //     });
+// // }
+// games.getLastFive(1);

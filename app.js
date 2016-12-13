@@ -25,7 +25,7 @@ module.exports = function(io, user) {
         var color = randomColor(150);
         Game.entities[id] = [coords[0],coords[1],10, color, username];
         // Send an id and coordinates for the player to spawn at
-        socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities, grass: Game.grass });
+        socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities, grass: Game.grass, missiles: Game.missiles });
         /* debugging player connection
          socket.on('setup', function (id,x,y,color) {
          console.log(id + " setup at " + x + "," + y + " with color " + color);
@@ -47,6 +47,22 @@ module.exports = function(io, user) {
                 io.emit('GrassUpdate', {id: data.id, x: replacementgrass.x, y: replacementgrass.y});
             }
         });
+        // player is attempting to pick up a missile (in the game.js main game loop, not in the clientCSinteractions.js)
+        // TODO make sure the change from copied 'EatRequest' to 'PickupRequest' below works as intended
+        // TODO make sure the 'PickupMissle' and 'MissileUpdate' given to socket.emit and io.emit respectively work as intended
+        socket.on('PickupRequest', function(data){
+            if (Game.missiles[data.id].x == data.x && Game.missiles[data.id].y == data.y) {
+                // tell client they succesfully picked up a missile
+                socket.emit('PickupMissile');
+                Game.missiles[data.id] = false;
+                // If missile has been picked up in a verified manner, replace that missile with another. Send to ALL
+                var replacementMissile = generateMissile();
+                io.emit('MissilesUpdate', {id: data.id, x: replacementMissile.x, y: replacementMissile.y});
+            }
+        });
+        socket.on('MissileEvent', function (data) {
+            socket.broadcast.emit('MissileEvent', data);
+        });
         socket.on('disconnect', function(){
             console.log('user disconnected');
             //TODO write code to log final death of disconnected client if possible
@@ -65,13 +81,19 @@ module.exports = function(io, user) {
     Game.width = 5000;
     Game.height = 5000;
     Game.numGrass = 200;
+    Game.numMissiles = 50;
 
     Game.initialize = function() {
         Game.entities = [];
         Game.grass = [];
+        Game.missiles = [];
         var i;
         for (i = 0; i < Game.numGrass; i++) {
             Game.grass.push(generateGrass());
+        }
+        var j;
+        for (j = 0; j < Game.numMissiles; j++) {
+            Game.missiles.push(generateMissile());
         }
         //TODO add conditions for ending the game
         this.gamestart = (new Date).getTime;
@@ -112,6 +134,13 @@ module.exports = function(io, user) {
         coords.x = Math.floor(Math.random()*Game.width);
         coords.y = Math.floor(Math.random()*Game.height);
         return coords;
+    }
+
+    function generateMissile () {
+        var coordinates = {};
+        coordinates.x = Math.floor(Math.random()*Game.width);
+        coordinates.y = Math.floor(Math.random()*Game.height);
+        return coordinates;
     }
 
 };
