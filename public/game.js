@@ -265,9 +265,15 @@ function updateMissiles() {
     }
     for (var i = 0; i < Game.firedMissiles.length; i++) {
         if (Game.firedMissiles[i] != null) {
-            if (Game.firedMissiles[i].x > Game.width || Game.firedMissiles[i].y > Game.height) {
+            if (Game.firedMissiles[i].x > Game.width || Game.firedMissiles[i].y > Game.height || Game.firedMissiles[i].x < 0 || Game.firedMissiles[i].y < 0) {
                 Game.firedMissiles[i] = null;
+                return
             }
+    // for (var i = 0; i < Game.firedMissiles.length; i++) {
+    //     if (Game.firedMissiles[i] != null) {
+    //         if (Game.firedMissiles[i].x > Game.width || Game.firedMissiles[i].y > Game.height) {
+    //             Game.firedMissiles[i] = null;
+    //         }
             Game.firedMissiles[i].x += MISSILE_SPEED * Math.cos(Game.firedMissiles[i].angle);
             Game.firedMissiles[i].y += MISSILE_SPEED * Math.sin(Game.firedMissiles[i].angle);
         }

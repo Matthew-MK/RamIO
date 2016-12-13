@@ -62,6 +62,18 @@ function getMousePos(canvas, evt) {
 function updateCoordinates() {
     //TODO do we need to make sure that player has been initialized? if(Player.id) {}
     Player.angle = Math.atan2( Player.mouseY-c.height/2, Player.mouseX-c.width/2 )/**(180/Math.PI)*/;
+    if (Player.x > Game.width) {
+        Player.x -= 5;
+    }
+    if (Player.y > Game.height) {
+        Player.y -= 5;
+    }
+    if (Player.x < 0) {
+        Player.x += 5;
+    }
+    if (Player.y < 0) {
+        Player.y += 5;
+    }
     Player.x += Player.speed * Math.cos(Player.angle);
     Player.y += Player.speed * Math.sin(Player.angle);
     Game.entities[Player.id] = [Player.x, Player.y, Player.size, Player.color,Player.radius, Player.username];
