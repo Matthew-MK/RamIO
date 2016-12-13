@@ -7,17 +7,16 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
         body        { padding-top:80px; word-wrap:break-word; }
+        body        { background-color: #77B3D6}
     </style>
-    <!-- loads ESJ chart file to draw chart for player game history information -->
-    <script src="./EJSCharts-master/EJSChart.min.js"></script>
-
+    <script src="html5-canvas-bar-graph.js"></script>
 </head>
 <body>
 <div class="container">
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <h1><span class="fa fa-book"></span> Profile Page</h1>
+        <a href="/logout" class="btn btn-default btn-sm fa fa-sign-out">Logout</a>
     </div>
 
     <div class="row">
@@ -30,8 +29,7 @@
                 <p>
                     <strong>id</strong>: <%= user.id %><br>
                     <strong>username</strong>: <%= user.username %><br>
-                    <strong>password</strong>: <%= user.password %><br>
-
+                    <strong>password</strong>: <%= user.password %>
                 </p>
 
                 <p>
@@ -40,33 +38,50 @@
 
             </div>
 
-            <!-- placeholder to draw ESJ chart for game history chart -->
-            <div id="ProfileGameHistory"></div>
+            <!-- TODO getting 404s for either attempt at loading the canvas graph js files.
+                        Make a routes.js change to fix this somehow? or just a localhost work around issue?  -->
+            <!-- Graph of player's last game sessions up to last 5 sessions -->
+            <canvas id="ProfileSessionHistoryGraph"></canvas>
 
-            <!-- constructs the ESJ chart object, filled with a JSON string of form
-                 {"session":"INTEGER VALUE", "highScore":"INTEGER VALUE"} -->
+            <!--<script src="barGraph.js"></script>-->
             <script type="text/javascript">
-                ProfileGameHistoryJSON = [ {session: 1, highScore: 100}, {session: 2, highScore: 1000},
-                                           {session: 3, highScore: 50}, {session: 4, highScore: 1750} ];
-                if(ProfileGameHistoryJSON.length == 0){
-                    document.write("Play a few games to see your high scores as a cool graph! :D")
-                } else {
+                var context = document.getElementById("ProfileSessionHistoryGraph").getContext("2d");
 
-                    var historyChart = new EJSC.Chart("ProfileGameHistory", {
-                        title: "Games History",
-                        axis_bottom: {caption: "Session"},
-                        axis_left: {caption: "Score/Size"},
-                        auto_zoom: 'y',
-                        auto_find_point_by_x: true
-                    });
+                var graph = new BarGraph(context);
+                graph.margin = 5;
+                graph.height = 300;
+                graph.width = 200;
+                graph.colors = ["purple", "yellow", "purple", "yellow", "purple"];
+                graph.backgroundColor = "#fff"
+                graph.yAxisLabelArr = ["Score/Size"];
 
-
-                    historyChart.addSeries(new EJSC.LineSeries(
-                        new EJSC.JSONStringDataHandler(ProfileGameHistoryJSON), {
-                            title: "Score/Size",
-                            padding: {x_min: 0, y_min: 1, x_max: 0, y_max: 1}
-                        }
-                    ));
+                <!-- temporary JSON object for testing -->
+                SessionHistory = [{session: 1, highScore: 10}, {session: 2, highScore: 500}]
+                document.write(Object.key(SessionHistory).length);
+                switch (SessionHistory.length) {
+                    case 1:
+                        graph.xAxisLabelArr = ['1'];
+                        graph.update(SessionHistory[1]);
+                        break;
+                    case 2:
+                        graph.xAxisLabelArr = ['1', '2'];
+                        graph.update(SessionHistory[1], SessionHistory[2]);
+                        break;
+                    case 3:
+                        graph.xAxisLabelArr = ['1', '2', '3'];
+                        graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3]);
+                        break;
+                    case 4:
+                        graph.xAxisLabelArr = ['1', '2', '3', '4'];
+                        graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3], SessionHistory[4]);
+                        break;
+                    case 5:
+                        graph.xAxisLabelArr = ['1', '2', '3', '4', '5'];
+                        graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3], SessionHistory[4], SessionHistory[5]);
+                        break;
+                    default:
+                        document.write("Play some games to get your high scores as a cool graph! :D");
+                        break;
                 }
 
 

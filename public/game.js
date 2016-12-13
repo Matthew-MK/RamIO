@@ -6,6 +6,8 @@ var Game = {};
 var leaderboard = [];
 var MISSILE_SIZE = 10;
 var MISSILE_SPEED = 10;
+var KILL_POINTS = 100;
+var HIT_POINTS = 10;
 
 // curently static grass patch size
 var GRASS_SIZE = 10;
@@ -13,8 +15,8 @@ var SVG_MULTIPLIER = 1.6;
 
 // fps denotes times game will be updated per second and sent out to server
 Game.fps = 45;
-Game.width = 5000;
-Game.height = 5000;
+Game.width = 2500;
+Game.height = 2500;
 
 Game.initialize = function() {
     this.entities = [];
@@ -135,7 +137,16 @@ function drawMap(players,grass, missiles) {
             var offsetX = Game.firedMissiles[i].x - Player.x;
             var offsetY = Game.firedMissiles[i].y - Player.y;
             if (Math.abs(offsetX) < Width/2 + MISSILE_SIZE && Math.abs(offsetY) < Height/2 + MISSILE_SIZE) {
-                drawCircle(MISSILE_SIZE, Width/2 + offsetX, Height/2 + offsetY, 'blue');
+                if (Game.firedMissiles[i].playerid != Player.id && Math.abs(offsetX) < Player.radius + MISSILE_SIZE && Math.abs(offsetY) < Player.radius + MISSILE_SIZE) {
+                    //TODO: Make damage dynamic
+                    Player.size -= 5*MISSILE_SIZE;
+                    Game.firedMissiles[i] = null;
+                    socket.emit('MissileHit', Game.firedMissiles[i]);
+                    if(Player.size <= 0) {
+                        processDeath(Game.firedMissiles[i]);
+                    }
+                }
+                drawCircle(MISSILE_SIZE, Width/2 + offsetX, Height/2 + offsetY, 'red');
                 //TODO Make this a function?
                 // rotateAndPaintImage(ctx, img, Player.angle, Width/2 - Player.radius/2, Height/2 - Player.radius/2, Player.radius, Player.radius );
                 // ctx.translate(Width/2 + offsetX, Height/2 + offsetY);
@@ -260,5 +271,14 @@ function updateMissiles() {
             Game.firedMissiles[i].y += MISSILE_SPEED * Math.sin(Game.firedMissiles[i].angle);
         }
     }
+}
+
+//TODO: All current reasons are just missiles
+function processDeath(reason) {
+    //TODO: trigger post-death screen
+    //reason.playerid is playerid of player who killed me
+    var death = {id: Player.id, reason: reason.playerid}
+    socket.emit('Die', death);
+    Player.deaths.push(Player.maxSize);
 }
 

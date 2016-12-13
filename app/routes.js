@@ -3,6 +3,11 @@ var game = require('../app');
 var path = require('path');
 var gameHistory = require('../app/controllers/game');
 
+var pg = require('pg');
+var client = new pg.Client();
+
+
+
 module.exports = function(app, passport, io) {
 
     // =====================================
@@ -53,6 +58,8 @@ module.exports = function(app, passport, io) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
         // game.getLastFive(req.user, req);
+        // gameHistory.getLastFive(req.user.id, res.render, req.user);
+
         res.render('profile.ejs', {
             user: req.user
             // results: req.results

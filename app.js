@@ -63,6 +63,12 @@ module.exports = function(io, user) {
         socket.on('MissileEvent', function (data) {
             socket.broadcast.emit('MissileEvent', data);
         });
+        socket.on('MissileHit', function (data) {
+            socket.broadcast.emit('MissileHit', data);
+        });
+        socket.on('Die', function (data) {
+            io.emit('Die', data);
+        });
         socket.on('disconnect', function(){
             console.log('user disconnected');
             //TODO write code to log final death of disconnected client if possible

@@ -39,3 +39,18 @@ socket.on('PickupMissile', function () {
 socket.on('MissileEvent', function (data) {
     Game.firedMissiles.push(data);
 })
+
+socket.on('MissileHit', function (data) {
+    if (data.playerid == Player.id) {
+        Player.size += HIT_POINTS;
+    }
+    Game.firedMissiles[data.id] = null;
+});
+
+socket.on('Die', function (data) {
+    Game.entities[data.id] = null;
+    if (data.playerid == Player.id) {
+        // you were responsible for the death
+        Player.size += KILL_POINTS;
+    }
+})

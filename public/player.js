@@ -10,6 +10,7 @@ Player.speed = 5;
 Player.radius = getRadius(Player.size);
 Player.missilesCount = 0;
 Player.angle = 0;
+Player.deaths = [];
 img = new Image();
 img.src = "/resources/playerRamio.svg";
 
@@ -36,7 +37,7 @@ window.addEventListener('click', clickHandler, false);
 function clickHandler(e){
     if(Player.missilesCount > 0){
         var id = Math.random()*10000;
-        var firedMissile = {id: id, x: Player.x, y: Player.y, angle: Player.angle};
+        var firedMissile = {id: id, playerid: Player.id, x: Player.x, y: Player.y, angle: Player.angle};
         Game.firedMissiles.push(firedMissile);
         socket.emit('MissileEvent', firedMissile);
         Player.missilesCount--;

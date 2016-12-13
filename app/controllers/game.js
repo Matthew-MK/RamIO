@@ -16,7 +16,7 @@ module.exports = {
                 console.log(e);
             })
     },
-    getLastFive: function(id) {
+    getLastFive: function(id, callback, user) {
         Game.findAll({
             attributes: ['session', 'score'],
             where: {
@@ -25,12 +25,16 @@ module.exports = {
             limit: 5,
             order: 'session DESC'
         })
-            .then(function(scores, req) {
+            .then(function(scores) {
 
-                req.results = scores.map(function(s) {
+                results = scores.map(function(s) {
                     return s.dataValues;
                 });
-                console.log(req.results);
+                callback('profile.ejs', {
+                        user: user,
+                        results: results
+                    });
+                console.log(results);
             })
             .catch(function(e) {
                 console.log(e);
