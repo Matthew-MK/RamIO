@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
                 }
             },
             session: {
-                type: DataTypes.STRING,
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true
             },

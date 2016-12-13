@@ -16,7 +16,7 @@ module.exports = {
                 console.log(e);
             })
     },
-    getLastFive: function(id, callback, user) {
+    getLastFive: function(id) {
         Game.findAll({
             attributes: ['session', 'score'],
             where: {
@@ -30,10 +30,10 @@ module.exports = {
                 results = scores.map(function(s) {
                     return s.dataValues;
                 });
-                callback('profile.ejs', {
-                        user: user,
-                        results: results
-                    });
+                // callback('profile.ejs', {
+                //         user: user,
+                //         results: results
+                //     });
                 console.log(results);
             })
             .catch(function(e) {
@@ -46,8 +46,8 @@ module.exports = {
 // for (var i=2; i < 10; i++) {
 //     games.insert({
 //         id: 1,
-//         session: i,
 //         score: i * 100,
+//         session: i,
 //         start: '2016-01-01'
 //     });
 // }
