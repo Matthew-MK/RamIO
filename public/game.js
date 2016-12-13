@@ -300,23 +300,23 @@ function processDeath(reason) {
     //set speed to 0 on death
     Player.speed = 0;
     Player.deaths.push({life: Player.deaths.length, highScore: Player.maxSize});
-    addDeathButton();
-
-    $("deathButton").click(function(){ requestRespawn(); });
+    // addDeathButton();
+    requestRespawn();
+    // $("deathButton").click(function(){ requestRespawn(); });
 
     //Do player death screen: playerDeath, deathContext
 
 
 }
 
-function addDeathButton() {
-    var r=$('deathButton').attr({
-        type: "button",
-        id: "Respawn",
-        value: 'Respawn'
-    });
-    $("container").append(r);
-}
+// function addDeathButton() {
+//     var r=$('deathButton').attr({
+//         type: "button",
+//         id: "Respawn",
+//         value: 'Respawn'
+//     });
+//     $("container").append(r);
+// }
 
 function requestRespawn() {
     socket.emit("RequestRespawn");
