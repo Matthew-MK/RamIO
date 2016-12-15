@@ -3,7 +3,9 @@
 
 var configDB = require('../../config/database.js');
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize(configDB.url);
+var sequelize = new Sequelize(configDB.url, {
+    timestamps: false
+});
 var User = sequelize.import('./user');
 
 module.exports = function(sequelize, DataTypes) {
@@ -16,13 +18,18 @@ module.exports = function(sequelize, DataTypes) {
                     key: 'id'
                 }
             },
-            session: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                primaryKey: true
-            },
             score: DataTypes.INTEGER,
-            start: DataTypes.DATE
+            start: {
+                type: DataTypes.DATE,
+                primaryKey: true
+            }
+            // session: {
+            //     type: DataTypes.INTEGER,
+            //     allowNull: false,
+            //     primaryKey: true
+            // },
+
+
         },
         {
             getterMethods: {

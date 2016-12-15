@@ -8,9 +8,11 @@ var configDB = require('./database.js');
 var Sequelize = require('sequelize');
 var pg = require('pg').native;
 var pghstore = require('pg-hstore');
-var sequelize = new Sequelize(configDB.url);
+var sequelize = new Sequelize(configDB.url, {
+    timestamps: false
+});
 
-// var game = require('../app/controllers/game');
+var gameController = require('../app/controllers/game');
 var User = sequelize.import('../app/models/user');
 // User.sync({force: true});
 User.sync();
@@ -68,6 +70,7 @@ module.exports = function(passport) {
                         user.save().catch(function (err) {
                             throw err;
                         }).then (function() {
+                            // console.log(user.get({plain: true}));
                             done(null, user);
                         });
                     }
@@ -106,9 +109,6 @@ module.exports = function(passport) {
                     } else if (!user.validPassword(password)) {
                         done(null, false, req.flash('loginMessage', 'Wrong password'));
                     } else {
-                        // game.getLastFive(user.id, function(results) {
-                        //     done(null, user, results);
-                        // });
                         done(null, user);
                     }
                 })

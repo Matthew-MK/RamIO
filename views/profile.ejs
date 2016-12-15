@@ -22,15 +22,27 @@
     <div class="row">
 
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
+        <div class="col-sm-7">
             <div class="well">
                 <h3><span class="fa fa-user"></span> Local</h3>
 
                 <p>
                     <strong>id</strong>: <%= user.id %><br>
                     <strong>username</strong>: <%= user.username %><br>
-                    <strong>password</strong>: <%= user.password %>
+                    <strong>password</strong>: <%= user.password %><br>
+                    <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
                 </p>
+
+                <p><strong>last 5 scores</strong></p>
+
+                <ol>
+                    <% if (user) {
+                        for (var i=0; i<user.history.length; i++) { %>
+
+                    <li><%= user.history[i].score %> on <%= user.history[i].start %></li>
+                        <% }
+                    } %>
+                </ol>
 
                 <p>
                     <a href="/game" class="btn btn-default"><span class="fa fa-gamepad"></span> Play Game!</a>
@@ -40,7 +52,7 @@
 
             <!-- TODO getting 404s for either attempt at loading the canvas graph js files.
                         Make a routes.js change to fix this somehow? or just a localhost work around issue?  -->
-            <!-- Graph of player's last game sessions up to last 5 sessions -->
+            <!-- Graph of player's last gameController sessions up to last 5 sessions -->
             <canvas id="ProfileSessionHistoryGraph"></canvas>
 
             <!--<script src="barGraph.js"></script>-->

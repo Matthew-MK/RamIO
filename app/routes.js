@@ -57,13 +57,7 @@ module.exports = function(app, passport, io) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        // game.getLastFive(req.user, req);
-        // gameHistory.getLastFive(req.user.id, res.render, req.user);
-
-        res.render('profile.ejs', {
-            user: req.user
-            // results: req.results
-        });
+        gameHistory.getHighScore(req, res, gameHistory.getLastFive);
     });
     // app.get('/profile', function(req, res) {
     //     res.render('profile.ejs', {
@@ -76,11 +70,12 @@ module.exports = function(app, passport, io) {
     // =====================================
     app.get('/game', isLoggedIn, function(req, res) {
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
+        // console.log('\n' + req.user + '\n');
         game(io, req.user);
     });
-    // app.get('/game', function(req, res) {
+    // app.get('/gameController', function(req, res) {
     //     res.sendFile(path.join(__dirname, '../public', 'index.html'));
-    //     game(io, {id: 4, username: 'chris', password: 'mypassword'});
+    //     gameController(io, {id: 4, username: 'chris', password: 'mypassword'});
     // });
 
     // =====================================

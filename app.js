@@ -11,7 +11,7 @@
     //   res.sendFile(__dirname + '/public/index.html');
     // });
 
-// var gameHistory = require('./app/controllers/game');
+// var gameHistory = require('./app/controllers/gameController');
 
 
 module.exports = function(io, user) {
@@ -47,7 +47,7 @@ module.exports = function(io, user) {
                 io.emit('GrassUpdate', {id: data.id, x: replacementgrass.x, y: replacementgrass.y});
             }
         });
-        // player is attempting to pick up a missile (in the game.js main game loop, not in the clientCSinteractions.js)
+        // player is attempting to pick up a missile (in the gameController.js main gameController loop, not in the clientCSinteractions.js)
         // TODO make sure the change from copied 'EatRequest' to 'PickupRequest' below works as intended
         // TODO make sure the 'PickupMissle' and 'MissileUpdate' given to socket.emit and io.emit respectively work as intended
         socket.on('PickupRequest', function(data){
@@ -90,10 +90,10 @@ module.exports = function(io, user) {
     //     console.log('listening on *: ' + port);
     // });
 
-//Server-side game logic
+//Server-side gameController logic
     var Game = {};
 
-// fps denotes times game will be updated per second and sent out to players
+// fps denotes times gameController will be updated per second and sent out to players
     Game.fps = 30;
     Game.width = 2500;
     Game.height = 2500;
@@ -112,12 +112,12 @@ module.exports = function(io, user) {
         for (j = 0; j < Game.numMissiles; j++) {
             Game.missiles.push(generateMissile());
         }
-        //TODO add conditions for ending the game
+        //TODO add conditions for ending the gameController
         this.gamestart = (new Date).getTime;
     };
     var startrunning = true;
     Game.run = function() {
-        // console.log('running game loop');
+        // console.log('running gameController loop');
         var loops = 0, skipTicks = 1000 / Game.fps,
             maxFrameSkip = 10;
         if (startrunning) {
@@ -126,13 +126,13 @@ module.exports = function(io, user) {
         }
 
         while ((new Date).getTime() > nextGameTick) {
-            // console.log('emitted game update');
+            // console.log('emitted gameController update');
             nextGameTick += skipTicks;
             loops++;
         }
     };
 
-// Start the game loop
+// Start the gameController loop
     Game.initialize();
     setInterval(Game.run, 1000/Game.fps);
 

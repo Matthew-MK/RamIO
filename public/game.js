@@ -1,7 +1,7 @@
 /**
  * Created by Chris Brajer on 12/7/2016.
  */
-//Client-side game logic
+//Client-side gameController logic
 var Game = {};
 var leaderboard = [];
 var MISSILE_SIZE = 10;
@@ -14,7 +14,7 @@ var HIT_REDUCTION = 20;
 var GRASS_SIZE = 10;
 var SVG_MULTIPLIER = 1.6;
 
-// fps denotes times game will be updated per second and sent out to server
+// fps denotes times gameController will be updated per second and sent out to server
 Game.fps = 45;
 Game.width = 2500;
 Game.height = 2500;
@@ -24,7 +24,7 @@ Game.initialize = function() {
     this.grass = [];
     this.missiles = [];
     this.firedMissiles = [];
-    //TODO add visuals for ending the game
+    //TODO add visuals for ending the gameController
 
     minimap = document.getElementById("minimap");
     mini_ctx = minimap.getContext("2d");
@@ -35,7 +35,7 @@ Game.initialize = function() {
 
 var startrunning = true;
 Game.run = function() {
-    // console.log('running game loop');
+    // console.log('running gameController loop');
     var loops = 0, skipTicks = 1000 / Game.fps,
         maxFrameSkip = 2;
     if (startrunning) {

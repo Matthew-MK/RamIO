@@ -8,7 +8,7 @@ socket.on('PlayerSetup', function (data) {
     Game.entities = data.entities;
     Game.grass = data.grass;
     Game.missiles = data.missiles;
-    // Start the game loop
+    // Start the gameController loop
 
     setInterval(Game.run, 1000/Game.fps);
     // debugging player connection
