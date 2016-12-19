@@ -77,7 +77,7 @@ module.exports = {
 
 function insertTestGameLogs () {
 
-    var gameLog = require('./game');
+    var gameLogger = require('./game');
 
     function randomDate(start, end) {
         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -97,12 +97,12 @@ function insertTestGameLogs () {
             for (j=0; j<numScores; j++) {
                 var score = Math.floor(Math.random() * 1000);
                 var start = randomDate(new Date(2016, 7, 13), new Date());
-                gameLog.insert({id: id, start: start, score: score});
+                gameLogger.insert({id: id, start: start, score: score});
             }
         }
     });
 }
 
-games = require('./game.js');
+gameLogger = require('./game.js');
 insertTestGameLogs();
-// games.getHighScore();
+// gameLogger.getHighScore();

@@ -38,10 +38,10 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport, io); // load our routes and pass in our app and fully configured passport
+require('./api/routes.js')(app, passport, io); // load our routes and pass in our api and fully configured passport
 app.use(express.static('public'));
 
 // launch ======================================================================
-// app.listen(port);
+// api.listen(port);
 http.listen(port);
 console.log('The magic happens on port ' + port);

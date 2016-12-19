@@ -9,14 +9,16 @@ var Sequelize = require('sequelize');
 var pg = require('pg').native;
 // var pghstore = require('pg-hstore');
 var sequelize = new Sequelize(configDB.url, {
-    timestamps: false
+    define: {
+        timestamps: false
+    }
 });
 
-var gameController = require('../app/controllers/game');
-var User = sequelize.import('../app/models/user');
+var gameLogger = require('../api/controllers/game');
+var User = sequelize.import('../api/models/user');
 // User.sync({force: true});
 User.sync();
-// expose this function to our app using module.exports
+// expose this function to our api using module.exports
 module.exports = function(passport) {
 
     // =========================================================================

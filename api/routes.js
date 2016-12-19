@@ -1,7 +1,7 @@
 // app/routes.js
 var game = require('../app');
 var path = require('path');
-var gameHistory = require('../app/controllers/game');
+var gameHistory = require('./controllers/game');
 
 var pg = require('pg');
 var client = new pg.Client();
@@ -59,7 +59,7 @@ module.exports = function(app, passport, io) {
     app.get('/profile', isLoggedIn, function(req, res) {
         gameHistory.getHighScore(req, res, gameHistory.getLastFive);
     });
-    // app.get('/profile', function(req, res) {
+    // api.get('/profile', function(req, res) {
     //     res.render('profile.ejs', {
     //         user: {id: 24, username: 'griffin', password: 'mypassword'}
     //     });
@@ -73,9 +73,9 @@ module.exports = function(app, passport, io) {
         // console.log('\n' + req.user + '\n');
         game(io, req.user);
     });
-    // app.get('/gameController', function(req, res) {
+    // api.get('/gameLogger', function(req, res) {
     //     res.sendFile(path.join(__dirname, '../public', 'index.html'));
-    //     gameController(io, {id: 4, username: 'chris', password: 'mypassword'});
+    //     gameLogger(io, {id: 4, username: 'chris', password: 'mypassword'});
     // });
 
     // =====================================
