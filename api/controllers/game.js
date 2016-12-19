@@ -104,5 +104,5 @@ function insertTestGameLogs () {
 }
 
 gameLogger = require('./game.js');
-insertTestGameLogs();
+// insertTestGameLogs();
 // gameLogger.getHighScore();
