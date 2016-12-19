@@ -2,7 +2,9 @@
 var configDB = require('../../config/database.js');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(configDB.url, {
-    timestamps: false
+    define: {
+        timestamps: false
+    }
 });
 var User = sequelize.import('../models/user');
 var Game = sequelize.import('../models/game');
@@ -59,7 +61,8 @@ module.exports = {
         })
             .then(function(max) {
                 // console.log( '\n' + max.score + '\n');
-                req.user.highScore = {score: max.score, start: max.start};
+                // condition ? expr1 : expr2
+                req.user.highScore = max ? {score: max.score, start: max.start} : {score: 'None', start: 'Never'};
                 // res.render('profile.ejs', {
                 //     user: req.user
                 // });
@@ -101,5 +104,5 @@ function insertTestGameLogs () {
 }
 
 games = require('./game.js');
-// insertTestGameLogs();
+insertTestGameLogs();
 // games.getHighScore();
