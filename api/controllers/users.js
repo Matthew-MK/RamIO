@@ -2,7 +2,7 @@
 var configDB = require('../../config/database.js');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(configDB.url, {
-    timestamps: false
+    // timestamps: false
 });
 var User = sequelize.import('../models/user');
 User.sync();

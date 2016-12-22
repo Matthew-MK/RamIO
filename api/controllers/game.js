@@ -2,9 +2,9 @@
 var configDB = require('../../config/database.js');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(configDB.url, {
-    define: {
-        timestamps: false
-    }
+    // define: {
+    //     timestamps: false
+    // }
 });
 var User = sequelize.import('../models/user');
 var Game = sequelize.import('../models/game');

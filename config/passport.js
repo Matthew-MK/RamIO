@@ -9,9 +9,9 @@ var Sequelize = require('sequelize');
 var pg = require('pg').native;
 // var pghstore = require('pg-hstore');
 var sequelize = new Sequelize(configDB.url, {
-    define: {
-        timestamps: false
-    }
+    // define: {
+    //     timestamps: false
+    // }
 });
 
 var gameLogger = require('../api/controllers/game');
@@ -84,7 +84,7 @@ module.exports = function(passport) {
                             done (null, newUser);
                         })
                             .catch(function(err) {
-                                done(null, false, req.flash('signupMessage', err));
+                                done(null, false, req.flash('signupMessage', err.message));
                             });
                     }
                 })
