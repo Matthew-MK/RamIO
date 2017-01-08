@@ -9,9 +9,6 @@ var Sequelize = require('sequelize');
 var pg = require('pg').native;
 // var pghstore = require('pg-hstore');
 var sequelize = new Sequelize(configDB.url, {
-    // define: {
-    //     timestamps: false
-    // }
 });
 
 var gameLogger = require('../api/controllers/game');
