@@ -4,43 +4,69 @@
 <head>
     <title>RamIO</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <style>
-        body        { padding-top:80px; }
-        body        { background-color: #77B3D6}
-    </style>
+    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> &lt;!&ndash; load fontawesome &ndash;&gt;-->
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="views.css">
+    <!--<style>-->
+        <!--body        { padding-top:80px; }-->
+        <!--body        { background-color: #77B3D6}-->
+    <!--</style>-->
 </head>
-<body>
+
+<body class="bg-carolina text-gray">
 <div class="container">
 
     <div class="col-sm-6 col-sm-offset-3">
 
-        <h1><span class="fa fa-sign-in"></span> Signup</h1>
+        <div class="jumbotron text-center bg-white m-top-up">
+            <h2><span class="fa fa-leaf"></span> Signup</h2>
 
-        <!-- show any messages that come back with authentication -->
-        <% if (message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-        <% } %>
+            <!-- show any messages that come back with authentication -->
+            <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+            <% } %>
 
-        <!-- LOGIN FORM -->
-        <form action="/signup" method="post">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" name="username">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
+            <!-- LOGIN FORM -->
+            <form action="/signup" method="post">
+                <div class="form-control input-group">
+                    <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                </div>
+                <div class="form-control input-group">
+                    <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                    <input type="text" class="form-control" name="username" placeholder="Password">
+                </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
-        </form>
+                <button type="submit" class="btn btn-info"><span class="fa fa-user-plus"></span> Signup</button>
+            </form>
+        </div>
 
-        <hr>
+        <!--<h1><span class="fa fa-sign-in"></span> Signup</h1>-->
 
-        <p>Already have an account? <a href="/login" style="color: lime">Login</a></p>
-        <p>Or go <a href="/" style="color: lime">home</a>.</p>
+        <!--&lt;!&ndash; show any messages that come back with authentication &ndash;&gt;-->
+        <!--<% if (message.length > 0) { %>-->
+        <!--<div class="alert alert-danger"><%= message %></div>-->
+        <!--<% } %>-->
 
+        <!--&lt;!&ndash; LOGIN FORM &ndash;&gt;-->
+        <!--<form action="/signup" method="post">-->
+            <!--<div class="form-group">-->
+                <!--<label>Username</label>-->
+                <!--<input type="text" class="form-control" name="username">-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<label>Password</label>-->
+                <!--<input type="password" class="form-control" name="password">-->
+            <!--</div>-->
+
+            <!--<button type="submit" class="btn btn-warning btn-lg">Signup</button>-->
+        <!--</form>-->
+
+        <!--<hr>-->
+        <div class="page-footer text-center text-gray">
+            <p>Already have an account? <a href="/login" class="text-white">Login</a></p>
+            <p>Or go <a href="/" class="text-white">home</a>.</p>
+        </div>
     </div>
 
 </div>
