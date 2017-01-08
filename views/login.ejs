@@ -4,7 +4,7 @@
 <head>
     <title>RamIO</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="views.css">
 </head>
 
@@ -13,11 +13,11 @@
         <div class="col-sm-6 col-sm-offset-3">
 
             <div class="jumbotron text-center bg-white m-top-up">
-                <h2><span class="fa fa-leaf"></span> Login</h2>
+                <h2><span class="fa fa-university"></span> Login</h2>
 
                 <!-- show any messages that come back with authentication -->
                 <% if (message.length > 0) { %>
-                <div class="alert alert-danger"><%= message %></div>
+                <div class="alert alert-danger alert-size"><%= message %></div>
                 <% } %>
 
                 <!-- LOGIN FORM -->
@@ -38,8 +38,8 @@
         </div>
 
         <div class="page-footer text-center">
-            <p class="text-darkgray">Need an account? <a href="/signup" class="text-white">Signup!</a></p>
-            <p class="text-darkgray">Or go <a href="/" class="text-white">home</a></p>
+            <p>Need an account? <a href="/signup" class="text-white">Signup!</a></p>
+            <p>Or go <a href="/" class="text-white">home</a></p>
         </div>
     </div>
 </body>
