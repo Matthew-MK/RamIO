@@ -5,44 +5,44 @@
     <title>RamIO Login</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <style>
-        body        { padding-top: 80px; }
-        body        { background-color: #7BAFD4}
-    </style>
+    <link rel="stylesheet" href="views.css">
 </head>
-<body>
-<div class="container">
 
-    <div class="col-sm-6 col-sm-offset-3">
+<body class="bg-carolina text-gray">
+    <!--<div class="page-header text-center text-white bg-carolina m-top-zero"><h1>RamIO</h1></div>-->
+    <div class="container">
+        <div class="col-sm-6 col-sm-offset-3">
 
-        <h1><span class="fa fa-sign-in"></span> Login</h1>
+            <div class="jumbotron text-center bg-white m-top-up">
+                <!--<h1><strong>RamIO</strong></h1>-->
+                <h2><span class="fa fa-leaf"></span> Login</h2>
 
-        <!-- show any messages that come back with authentication -->
-        <% if (message.length > 0) { %>
-        <div class="alert alert-danger"><%= message %></div>
-        <% } %>
+                <!-- show any messages that come back with authentication -->
+                <% if (message.length > 0) { %>
+                <div class="alert alert-danger"><%= message %></div>
+                <% } %>
 
-        <!-- LOGIN FORM -->
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" name="username">
+                <!-- LOGIN FORM -->
+                <form action="/login" method="post">
+                    <div class="form-control input-group">
+                        <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-control input-group">
+                        <span class="input-group-addon"><span class="fa fa-lock"></span></span>
+                        <input type="text" class="form-control" name="username" placeholder="Password">
+                    </div>
+
+                    <button type="submit" class="btn btn-info"><span class="fa fa-sign-in"></span> Login</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Login</button>
-        </form>
+        </div>
 
-        <hr>
-
-        <p>Need an account? <a href="/signup" style="color: lime">Signup</a>!</p>
-        <p>Or go <a href="/" style="color: lime;">home</a>.</p>
-
+        <div class="page-footer text-center">
+            <p class="text-darkgray">Need an account? <a href="/signup" class="link-white">Signup!</a></p>
+            <p class="text-darkgray">Or go <a href="/" class="link-white">home</a></p>
+        </div>
     </div>
-
-</div>
 </body>
 </html>
