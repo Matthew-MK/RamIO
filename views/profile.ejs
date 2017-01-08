@@ -19,13 +19,10 @@
         <!-- LOCAL INFORMATION -->
         <!--<div class="col-sm-7">-->
             <div class="well bg-white">
-    <h1 class=" text-center"><span class="fa fa-university"></span> Profile Page</h1>
+    <h1 class=" text-center"><span class="fa fa-line-chart"></span> Profile Page</h1>
                 <h3><span class="fa fa-user"></span> <%= user.username %></h3>
 
                 <p>
-                    <!--<strong>id</strong>: <%= user.id %><br>-->
-                    <!--<strong>username</strong>: <%= user.username %><br>-->
-                    <!--<strong>password</strong>: <%= user.password %><br>-->
                     <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
                 </p>
 
@@ -42,7 +39,7 @@
 
                 <p>
                     <a href="/game" class="btn btn-info"><span class="fa fa-gamepad"></span> Play Game!</a>
-                    <a href="/logout" class="btn btn-info pull-right"><span class="fa fa-power-off"></span> Logout</a>
+                    <a href="/logout" class="btn btn-info pull-right"><span class="fa fa-sign-out"></span> Logout</a>
                 </p>
 
             </div>
