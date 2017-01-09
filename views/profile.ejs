@@ -8,36 +8,37 @@
     <link rel="stylesheet" href="views.css">
     <script src="html5-canvas-bar-graph.js"></script>
 </head>
+
 <body class="bg-carolina text-gray">
-<div class="container m-top-up">
+<div class="container m-five">
 
     <!-- LOCAL INFORMATION -->
-    <div class="col-sm-7 center-block">
-        <div class="well bg-white">
-            <h1 class=" text-center"><span class="fa fa-line-chart text-carolina"></span> Profile Page</h1>
-            <h3><span class="fa fa-user text-carolina"></span> <%= user.username %></h3>
 
-            <p>
-                <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
-            </p>
+    <div class="well bg-white half-width">
+        <h1 class=" text-center"><span class="fa fa-line-chart text-carolina"></span> Profile Page</h1>
+        <h3><span class="fa fa-user text-carolina"></span> <%= user.username %></h3>
 
-            <p><strong>last 5 scores</strong></p>
+        <p>
+            <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
+        </p>
 
-            <ol>
-                <% if (user) {
-                for (var i = 0; i < user.history.length; i++) { %>
+        <p><strong>last 5 scores</strong></p>
 
-                <li><%= user.history[i].score %> on <%= user.history[i].start %></li>
-                <% }
-                } %>
-            </ol>
+        <ol>
+            <% if (user) {
+            for (var i = 0; i < user.history.length; i++) { %>
 
-            <p>
-                <a href="/game" class="btn btn-info"><span class="fa fa-gamepad"></span> Play Game!</a>
-                <a href="/logout" class="btn btn-info pull-right"><span class="fa fa-sign-out"></span> Logout</a>
-            </p>
+            <li><%= user.history[i].score %> on <%= user.history[i].start %></li>
+            <% }
+            } %>
+        </ol>
 
-        </div>
+        <p>
+            <a href="/game" class="btn btn-info"><span class="fa fa-gamepad"></span> Play Game!</a>
+            <a href="/logout" class="btn btn-info pull-right"><span class="fa fa-sign-out"></span> Logout</a>
+        </p>
+
+    </div>
 
         <!-- TODO getting 404s for either attempt at loading the canvas graph js files.
                     Make a routes.js change to fix this somehow? or just a localhost work around issue?  -->
@@ -91,7 +92,7 @@
 
     </div>
 
-</div>
+
 
 </div>
 </body>

@@ -1,5 +1,7 @@
-.m-top-up       { margin-top: 15%; }
+.m-five         { margin: 5%; }
+.m-top-up       { margin-top: 10%; }
 .m-top-zero     { margin-top: 0; }
+.p-top-up       { padding-top: 5%; }
 .p-top-zero     { padding-top: 0; }
 .bg-carolina    { background-color: #7BAFD4; }
 .bg-white       { background: #ffffff; }
@@ -14,3 +16,4 @@
                   font-size: 75%;   }
 .btn-info       { background-color: #7BAFD4; }
 .center-block   { float: none; }
+.half-width     { width: 50%; }
