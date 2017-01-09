@@ -13,3 +13,4 @@
 .alert          { padding: 0 5% 0 5%;
                   font-size: 75%;   }
 .btn-info       { background-color: #7BAFD4; }
+.center-block   { float: none; }
