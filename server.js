@@ -49,7 +49,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./api/routes.js')(app, passport, io, Game); // load our routes and pass in our api and fully configured passport
+require('./api/routes.js')(app, passport, io, Game, User); // load our routes and pass in our api and fully configured passport
 app.use(express.static('public'));
 app.use(express.static('views'));
 

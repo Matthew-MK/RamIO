@@ -1,12 +1,31 @@
 // Schema model and functions to insert and delete into games sql table
 // =======================================================
 
+
+
 module.exports = {
     insert: function (game, Game) {
         Game.build(game)
             .save()
             .then(function(game) {
                 console.log('inserted', game);
+            })
+            .catch(function(e) {
+                console.log(e);
+            })
+    },
+    getHighScore: function(req, res, next, Game) {
+        Game.findOne({
+
+            attributes: ['score', 'start'],
+            where: {
+                id: req.user.id
+            },
+            order: 'score DESC'
+        })
+            .then(function(max) {
+                req.user.highScore = max ? {score: max.score, start: max.start} : {score: 'None', start: 'Never'};
+                next(req, res, Game);
             })
             .catch(function(e) {
                 console.log(e);
@@ -34,19 +53,41 @@ module.exports = {
                 console.log(e);
             })
     },
-    getHighScore: function(req, res, next, Game) {
-        Game.findOne({
-
-            attributes: ['score', 'start'],
-            where: {
-                id: req.user.id
-            },
+    getTopFivePlayers: function(req, res, Game, User) {
+        Game.findAll({
+            attributes: ['id', 'score'],
+            limit: 5,
             order: 'score DESC'
         })
-            .then(function(max) {
-                req.user.highScore = max ? {score: max.score, start: max.start} : {score: 'None', start: 'Never'};
-                next(req, res, Game);
-        })
+            .then(function(scores) {
+                req.topfive = scores.map(function(s) {
+                    return s.dataValues;
+                });
+                console.log(req.topfive);
+                User.findAll({
+                    attributes: ['id', 'username']
+                })
+                    .then(function(u) {
+                        var allUsers = u.map(function(s) {
+                            return s.dataValues;
+                        });
+                        console.log(allUsers);
+                        for (var i=0; i < 5; i++) {
+                            for (var j=0; j < allUsers.length; j++) {
+                                if (req.topfive[i]['id'] === allUsers[j]['id']) {
+                                    req.topfive[i]['username'] = allUsers[j]['username'];
+                                }
+                            }
+                        }
+                        console.log(req.topfive);
+                        res.render('index.ejs', {
+                            topfive: req.topfive
+                        })
+                    })
+                    .catch(function(e) {
+                        console.log(e);
+                    })
+                })
             .catch(function(e) {
                 console.log(e);
             })

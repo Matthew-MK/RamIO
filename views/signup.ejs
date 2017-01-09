@@ -13,7 +13,7 @@
 
     <div class="col-sm-6 col-sm-offset-3">
 
-        <div class="jumbotron text-center bg-white m-top-up">
+        <div class="jumbotron text-center bg-white m-top-ten p-tb-five border-gray">
             <h2><span class="fa fa-pencil-square-o text-carolina"></span> Signup</h2>
 
             <!-- show any messages that come back with authentication -->
@@ -22,7 +22,7 @@
             <% } %>
 
             <!-- LOGIN FORM -->
-            <form action="/signup" method="post">
+            <form action="/signup" method="post" class="m-top-five">
                 <div class="form-control input-group bg-lightgray">
                     <span class="input-group-addon bg-white"><span class="fa fa-user text-carolina"></span></span>
                     <input type="text" class="form-control" name="username" placeholder="Username">
@@ -32,13 +32,13 @@
                     <input type="password" class="form-control" name="password" placeholder="Password">
                 </div>
 
-                <button type="submit" class="btn btn-info"><span class="fa fa-user-plus"></span> Signup</button>
+                <button type="submit" class="btn btn-info m-top-five border-gray"><span class="fa fa-user-plus"></span> Signup</button>
             </form>
         </div>
 
         <div class="page-footer text-center">
             <p>Already have an account? <a href="/login" class="text-white">Login</a></p>
-            <p>Or go <a href="/" class="text-white">home</a></p>
+            <p>Or go <a href="/" class="text-white">Home</a></p>
         </div>
     </div>
 

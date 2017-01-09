@@ -4,13 +4,14 @@ var path = require('path');
 var gameStats = require('./controllers/game');
 
 
-module.exports = function(app, passport, io, Game) {
+module.exports = function(app, passport, io, Game, User) {
 
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+        // res.render('index.ejs'); // load the index.ejs file
+        gameStats.getTopFivePlayers(req, res, Game, User);
     });
 
     // =====================================
@@ -61,7 +62,7 @@ module.exports = function(app, passport, io, Game) {
     // =====================================
     app.get('/game', isLoggedIn, function(req, res) {
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
-        game_server(io, req.user);
+        game_server(io, req.user, app);
     });
 
     // =====================================

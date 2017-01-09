@@ -1,7 +1,7 @@
 
 // var gameLogger = require('./app/controllers/gameLogger');
 
-module.exports = function(io, user) {
+module.exports = function(io, user, app) {
     io.on('connection', function(socket){
         console.log('a user connected');
         // Take id from authentication ID
