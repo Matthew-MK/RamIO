@@ -1,9 +1,12 @@
-# Ram.io
-Final project for Fall 2016 COMP426 @ UNC
+# RamIO
+Final project inspired by Agar.io and Slither.io for Fall 2016 COMP426 @ UNC.
 
-Inspired by Agar.io and Slither.io
+Was due on 2016.12.06. Even though we got an A, 
+I wanted to continue to work on the project. As of the due
+date I have been the sole contributor. If that changes I 
+update this README.
 
-https://ramio.herokuapp.com/
+Working link: https://ramio.herokuapp.com/
 
 Collaborators:
 <br>

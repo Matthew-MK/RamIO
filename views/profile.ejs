@@ -4,99 +4,94 @@
 <head>
     <title>RamIO</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">-->
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="views.css">
-    <style>
-        body        { padding-top:80px; word-wrap:break-word; }
-        body        { background-color: #77B3D6}
-    </style>
     <script src="html5-canvas-bar-graph.js"></script>
 </head>
 <body class="bg-carolina text-gray">
-<div class="container">
+<div class="container m-top-up">
 
-        <!-- LOCAL INFORMATION -->
-        <!--<div class="col-sm-7">-->
-            <div class="well bg-white">
-    <h1 class=" text-center"><span class="fa fa-line-chart"></span> Profile Page</h1>
-                <h3><span class="fa fa-user"></span> <%= user.username %></h3>
+    <!-- LOCAL INFORMATION -->
+    <div class="col-sm-7">
+        <div class="well bg-white">
+            <h1 class=" text-center"><span class="fa fa-line-chart text-carolina"></span> Profile Page</h1>
+            <h3><span class="fa fa-user text-carolina"></span> <%= user.username %></h3>
 
-                <p>
-                    <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
-                </p>
+            <p>
+                <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
+            </p>
 
-                <p><strong>last 5 scores</strong></p>
+            <p><strong>last 5 scores</strong></p>
 
-                <ol>
-                    <% if (user) {
-                        for (var i=0; i<user.history.length; i++) { %>
+            <ol>
+                <% if (user) {
+                for (var i = 0; i < user.history.length; i++) { %>
 
-                    <li><%= user.history[i].score %> on <%= user.history[i].start %></li>
-                        <% }
-                    } %>
-                </ol>
+                <li><%= user.history[i].score %> on <%= user.history[i].start %></li>
+                <% }
+                } %>
+            </ol>
 
-                <p>
-                    <a href="/game" class="btn btn-info"><span class="fa fa-gamepad"></span> Play Game!</a>
-                    <a href="/logout" class="btn btn-info pull-right"><span class="fa fa-sign-out"></span> Logout</a>
-                </p>
-
-            </div>
-
-            <!-- TODO getting 404s for either attempt at loading the canvas graph js files.
-                        Make a routes.js change to fix this somehow? or just a localhost work around issue?  -->
-            <!-- Graph of player's last gameLogger sessions up to last 5 sessions -->
-            <canvas id="ProfileSessionHistoryGraph"></canvas>
-
-            <!--<script src="barGraph.js"></script>-->
-            <script type="text/javascript">
-                var context = document.getElementById("ProfileSessionHistoryGraph").getContext("2d");
-
-                var graph = new BarGraph(context);
-                graph.margin = 5;
-                graph.height = 300;
-                graph.width = 200;
-                graph.colors = ["purple", "yellow", "purple", "yellow", "purple"];
-                graph.backgroundColor = "#fff"
-                graph.yAxisLabelArr = ["Score/Size"];
-
-                <!-- temporary JSON object for testing -->
-                SessionHistory = [{session: 1, highScore: 10}, {session: 2, highScore: 500}]
-                document.write(Object.key(SessionHistory).length);
-                switch (SessionHistory.length) {
-                    case 1:
-                        graph.xAxisLabelArr = ['1'];
-                        graph.update(SessionHistory[1]);
-                        break;
-                    case 2:
-                        graph.xAxisLabelArr = ['1', '2'];
-                        graph.update(SessionHistory[1], SessionHistory[2]);
-                        break;
-                    case 3:
-                        graph.xAxisLabelArr = ['1', '2', '3'];
-                        graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3]);
-                        break;
-                    case 4:
-                        graph.xAxisLabelArr = ['1', '2', '3', '4'];
-                        graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3], SessionHistory[4]);
-                        break;
-                    case 5:
-                        graph.xAxisLabelArr = ['1', '2', '3', '4', '5'];
-                        graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3], SessionHistory[4], SessionHistory[5]);
-                        break;
-                    default:
-                        document.write("Play some games to get your high scores as a cool graph! :D");
-                        break;
-                }
-
-
-            </script>
-
+            <p>
+                <a href="/game" class="btn btn-info"><span class="fa fa-gamepad"></span> Play Game!</a>
+                <a href="/logout" class="btn btn-info pull-right"><span class="fa fa-sign-out"></span> Logout</a>
+            </p>
 
         </div>
 
-    <!--</div>-->
+        <!-- TODO getting 404s for either attempt at loading the canvas graph js files.
+                    Make a routes.js change to fix this somehow? or just a localhost work around issue?  -->
+        <!-- Graph of player's last gameLogger sessions up to last 5 sessions -->
+        <canvas id="ProfileSessionHistoryGraph"></canvas>
+
+        <!--<script src="barGraph.js"></script>-->
+        <script type="text/javascript">
+            var context = document.getElementById("ProfileSessionHistoryGraph").getContext("2d");
+
+            var graph = new BarGraph(context);
+            graph.margin = 5;
+            graph.height = 300;
+            graph.width = 200;
+            graph.colors = ["purple", "yellow", "purple", "yellow", "purple"];
+            graph.backgroundColor = "#fff"
+            graph.yAxisLabelArr = ["Score/Size"];
+
+            <!-- temporary JSON object for testing -->
+            SessionHistory = [{session: 1, highScore: 10}, {session: 2, highScore: 500}]
+            document.write(Object.key(SessionHistory).length);
+            switch (SessionHistory.length) {
+                case 1:
+                    graph.xAxisLabelArr = ['1'];
+                    graph.update(SessionHistory[1]);
+                    break;
+                case 2:
+                    graph.xAxisLabelArr = ['1', '2'];
+                    graph.update(SessionHistory[1], SessionHistory[2]);
+                    break;
+                case 3:
+                    graph.xAxisLabelArr = ['1', '2', '3'];
+                    graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3]);
+                    break;
+                case 4:
+                    graph.xAxisLabelArr = ['1', '2', '3', '4'];
+                    graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3], SessionHistory[4]);
+                    break;
+                case 5:
+                    graph.xAxisLabelArr = ['1', '2', '3', '4', '5'];
+                    graph.update(SessionHistory[1], SessionHistory[2], SessionHistory[3], SessionHistory[4], SessionHistory[5]);
+                    break;
+                default:
+                    document.write("Play some games to get your high scores as a cool graph! :D");
+                    break;
+            }
+
+
+        </script>
+
+
+    </div>
+
+</div>
 
 </div>
 </body>
