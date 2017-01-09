@@ -2,6 +2,10 @@
   "name": "RamIO",
   "version": "0.0.1",
   "description": "A real-time, multiplayer HTML5 game inspired by Slither.io, Agar.io etc.",
+  "engines": {
+    "node": "~7.4.0",
+    "npm": "~4.0.5"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
