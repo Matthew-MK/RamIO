@@ -1,12 +1,5 @@
-// // functions to insert and delete into games sql table
-// // =======================================================
-// var configDB = require('../../config/database.js');
-// var Sequelize = require('sequelize');
-// var sequelize = new Sequelize(configDB.url);
-// // var User = sequelize.import('../models/user');
-// var Game = sequelize.import('../models/game');
-//
-// Game.sync();
+// Schema model and functions to insert and delete into games sql table
+// =======================================================
 
 module.exports = {
     insert: function (game, Game) {
@@ -20,7 +13,6 @@ module.exports = {
             })
     },
     getLastFive: function(req, res, Game) {
-    // getLastFive: function(req, res) {
         Game.findAll({
             attributes: ['start', 'score'],
             where: {
@@ -52,12 +44,7 @@ module.exports = {
             order: 'score DESC'
         })
             .then(function(max) {
-                // console.log( '\n' + max.score + '\n');
-                // condition ? expr1 : expr2
                 req.user.highScore = max ? {score: max.score, start: max.start} : {score: 'None', start: 'Never'};
-                // res.render('profile.ejs', {
-                //     user: req.user
-                // });
                 next(req, res, Game);
         })
             .catch(function(e) {
@@ -68,7 +55,7 @@ module.exports = {
 
 
 // =============================================================
-// Tester methods to assert CRUD operations
+// Tester methods to assess CRUD operations
 // =============================================================
 
 function insertTestGameLogs () {

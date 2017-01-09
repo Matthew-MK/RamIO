@@ -3,19 +3,6 @@
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 
-// load up the user model
-// var pg = require('pg').native;
-// var pghstore = require('pg-hstore');
-// var configDB = require('./database.js');
-// var Sequelize = require('sequelize');
-// var sequelize = new Sequelize(configDB.url);
-
-// var gameLogger = require('../api/controllers/game');
-// var Game = sequelize.import('../api/models/game');
-// Game.sync();
-// var User = sequelize.import('../api/models/user');
-// User.sync();
-
 // expose this function to our api using module.exports
 module.exports = function(passport, User) {
 
@@ -70,7 +57,6 @@ module.exports = function(passport, User) {
                         user.save().catch(function (err) {
                             throw err;
                         }).then (function() {
-                            // console.log(user.get({plain: true}));
                             done(null, user);
                         });
                     }

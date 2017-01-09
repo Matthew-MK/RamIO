@@ -3,10 +3,6 @@ var game_server = require('../game-server');
 var path = require('path');
 var gameStats = require('./controllers/game');
 
-// var pg = require('pg');
-// var client = new pg.Client();
-
-
 
 module.exports = function(app, passport, io, Game) {
 
@@ -59,24 +55,14 @@ module.exports = function(app, passport, io, Game) {
     app.get('/profile', isLoggedIn, function(req, res) {
         gameStats.getHighScore(req, res, gameStats.getLastFive, Game);
     });
-    // app.get('/profile', function(req, res) {
-    //     res.render('profile.ejs', {
-    //         user: {id: 24, username: 'griffin', highScore: 55, }
-    //     });
-    // });
 
     // =====================================
     // GAME ==============================
     // =====================================
     app.get('/game', isLoggedIn, function(req, res) {
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
-        // console.log('\n' + req.user + '\n');
         game_server(io, req.user);
     });
-    // api.get('/gameLogger', function(req, res) {
-    //     res.sendFile(path.join(__dirname, '../public', 'index.html'));
-    //     gameLogger(io, {id: 4, username: 'chris', password: 'mypassword'});
-    // });
 
     // =====================================
     // LOGOUT ==============================

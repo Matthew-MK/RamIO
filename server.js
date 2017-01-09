@@ -17,12 +17,12 @@ var cookieParser = require('cookie-parser'); // parse cookies
 var bodyParser   = require('body-parser'); // parse posts
 var session      = require('express-session'); // session middleware
 
-// configure serialize
+// connect to DB and configure serialize
 var configDB = require('./config/database.js');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(configDB.url);
 
-// initialize models
+// initialize schemas here since they will be sent seperately
 var Game = sequelize.import('./api/models/game');
 Game.sync();
 var User = sequelize.import('./api/models/user');
@@ -54,6 +54,6 @@ app.use(express.static('public'));
 app.use(express.static('views'));
 
 // launch ======================================================================
-// api.listen(port);
+// app.listen(port);
 http.listen(port);
 console.log('The magic happens on port ' + port);
