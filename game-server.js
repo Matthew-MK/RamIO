@@ -1,18 +1,5 @@
 
-
-    // var express = require('express');
-    // var app = express();
-    // var http = require('http').Server(app);
-    // var io = require('socket.io')(http);
-    // app.use(express.static('public'));
-    // var port = process.env.PORT || 3001;
-
-    // app.get('/', function(req, res){
-    //   res.sendFile(__dirname + '/public/index.html');
-    // });
-
-// var gameHistory = require('./app/controllers/gameLogger');
-
+// var gameLogger = require('./app/controllers/gameLogger');
 
 module.exports = function(io, user) {
     io.on('connection', function(socket){
@@ -86,9 +73,6 @@ module.exports = function(io, user) {
         });
     });
 
-    // http.listen(port, function() {
-    //     console.log('listening on *: ' + port);
-    // });
 
 //Server-side gameLogger logic
     var Game = {};

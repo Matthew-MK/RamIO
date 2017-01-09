@@ -4,19 +4,20 @@
 var LocalStrategy   = require('passport-local').Strategy;
 
 // load up the user model
-var configDB = require('./database.js');
-var Sequelize = require('sequelize');
-var pg = require('pg').native;
+// var pg = require('pg').native;
 // var pghstore = require('pg-hstore');
-var sequelize = new Sequelize(configDB.url, {
-});
+// var configDB = require('./database.js');
+// var Sequelize = require('sequelize');
+// var sequelize = new Sequelize(configDB.url);
 
-var gameLogger = require('../api/controllers/game');
-var User = sequelize.import('../api/models/user');
-// User.sync({force: true});
-User.sync();
+// var gameLogger = require('../api/controllers/game');
+// var Game = sequelize.import('../api/models/game');
+// Game.sync();
+// var User = sequelize.import('../api/models/user');
+// User.sync();
+
 // expose this function to our api using module.exports
-module.exports = function(passport) {
+module.exports = function(passport, User) {
 
     // =========================================================================
     // passport session setup ==================================================

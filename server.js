@@ -17,7 +17,18 @@ var cookieParser = require('cookie-parser'); // parse cookies
 var bodyParser   = require('body-parser'); // parse posts
 var session      = require('express-session'); // session middleware
 
-require('./config/passport')(passport); // pass passport for configuration
+// configure serialize
+var configDB = require('./config/database.js');
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize(configDB.url);
+
+// initialize models
+var Game = sequelize.import('./api/models/game');
+Game.sync();
+var User = sequelize.import('./api/models/user');
+User.sync();
+
+require('./config/passport')(passport, User); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -38,7 +49,7 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./api/routes.js')(app, passport, io); // load our routes and pass in our api and fully configured passport
+require('./api/routes.js')(app, passport, io, Game); // load our routes and pass in our api and fully configured passport
 app.use(express.static('public'));
 app.use(express.static('views'));
 

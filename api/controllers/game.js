@@ -1,24 +1,15 @@
-// functions to insert and delete into gameHistory table
-var configDB = require('../../config/database.js');
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize(configDB.url, {
-    // define: {
-    //     timestamps: false
-    // }
-});
-var User = sequelize.import('../models/user');
-var Game = sequelize.import('../models/game');
-
-// var sequelize = new Sequelize('connectionUri', {
-//     define: {
-//         timestamps: false // true by default
-//     }
-// });
-
-Game.sync();
+// // functions to insert and delete into games sql table
+// // =======================================================
+// var configDB = require('../../config/database.js');
+// var Sequelize = require('sequelize');
+// var sequelize = new Sequelize(configDB.url);
+// // var User = sequelize.import('../models/user');
+// var Game = sequelize.import('../models/game');
+//
+// Game.sync();
 
 module.exports = {
-    insert: function (game) {
+    insert: function (game, Game) {
         Game.build(game)
             .save()
             .then(function(game) {
@@ -28,7 +19,8 @@ module.exports = {
                 console.log(e);
             })
     },
-    getLastFive: function(req, res) {
+    getLastFive: function(req, res, Game) {
+    // getLastFive: function(req, res) {
         Game.findAll({
             attributes: ['start', 'score'],
             where: {
@@ -50,7 +42,7 @@ module.exports = {
                 console.log(e);
             })
     },
-    getHighScore: function(req, res, next) {
+    getHighScore: function(req, res, next, Game) {
         Game.findOne({
 
             attributes: ['score', 'start'],
@@ -66,7 +58,7 @@ module.exports = {
                 // res.render('profile.ejs', {
                 //     user: req.user
                 // });
-                next(req, res);
+                next(req, res, Game);
         })
             .catch(function(e) {
                 console.log(e);
@@ -74,6 +66,10 @@ module.exports = {
     }
 };
 
+
+// =============================================================
+// Tester methods to assert CRUD operations
+// =============================================================
 
 function insertTestGameLogs () {
 
@@ -103,6 +99,8 @@ function insertTestGameLogs () {
     });
 }
 
-gameLogger = require('./game.js');
+// Tester activators below here
+// =====================================================
+// gameLogger = require('./game.js');
 // insertTestGameLogs();
 // gameLogger.getHighScore();

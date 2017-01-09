@@ -1,14 +1,14 @@
 // app/routes.js
-var game = require('../app');
+var game_server = require('../game-server');
 var path = require('path');
-var gameHistory = require('./controllers/game');
+var gameStats = require('./controllers/game');
 
-var pg = require('pg');
-var client = new pg.Client();
+// var pg = require('pg');
+// var client = new pg.Client();
 
 
 
-module.exports = function(app, passport, io) {
+module.exports = function(app, passport, io, Game) {
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -57,11 +57,11 @@ module.exports = function(app, passport, io) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        gameHistory.getHighScore(req, res, gameHistory.getLastFive);
+        gameStats.getHighScore(req, res, gameStats.getLastFive, Game);
     });
-    // api.get('/profile', function(req, res) {
+    // app.get('/profile', function(req, res) {
     //     res.render('profile.ejs', {
-    //         user: {id: 24, username: 'griffin', password: 'mypassword'}
+    //         user: {id: 24, username: 'griffin', highScore: 55, }
     //     });
     // });
 
@@ -71,7 +71,7 @@ module.exports = function(app, passport, io) {
     app.get('/game', isLoggedIn, function(req, res) {
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
         // console.log('\n' + req.user + '\n');
-        game(io, req.user);
+        game_server(io, req.user);
     });
     // api.get('/gameLogger', function(req, res) {
     //     res.sendFile(path.join(__dirname, '../public', 'index.html'));
