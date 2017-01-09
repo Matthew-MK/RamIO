@@ -118,3 +118,15 @@ th {
 .border-gray {
     border: 1px solid #666666;
 }
+
+.border-lightgray {
+    border: 1px solid #dddddd;
+}
+
+.margin-lightgray {
+    outline: 1px solid #dddddd;
+}
+
+tr ~ tr {
+    font-size: 80%;
+}

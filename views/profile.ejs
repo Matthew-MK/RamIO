@@ -16,13 +16,14 @@
 
     <div class="well bg-white half-width border-gray">
         <h1 class=" text-center"><span class="fa fa-line-chart text-carolina"></span> Profile Page</h1>
-        <h3><span class="fa fa-user text-carolina"></span> <%= user.username %></h3>
+        <h3><span class="fa fa-user-circle-o text-carolina"></span> <%= user.username %></h3>
 
         <p>
-            <strong>high score</strong>: <%= user.highScore.score + ' on ' + user.highScore.start || 'TBD' %><br>
+            <strong>High Score</strong>: <%= user.highScore.score ? user.highScore.score + ' on ' + user.highScore.start : 'Total newb status!' %>
+            <br>
         </p>
 
-        <p><strong>last 5 scores</strong></p>
+        <p><strong>Last 5 Game Scores</strong></p>
 
         <ol>
             <% if (user) {
@@ -90,7 +91,6 @@
         </script>
 
 
-    </div>
 
 
 

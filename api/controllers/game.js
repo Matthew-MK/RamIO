@@ -24,7 +24,9 @@ module.exports = {
             order: 'score DESC'
         })
             .then(function(max) {
-                req.user.highScore = max ? {score: max.score, start: max.start} : {score: 'None', start: 'Never'};
+                // req.user.highScore = max ? {score: max.score, start: max.start} : {score: 'None', start: 'Never'};
+                req.user.highScore = max ? {score: max.score, start: max.start} : {};
+                // req.user.highScore = {score: max.score, start: max.start};
                 next(req, res, Game);
             })
             .catch(function(e) {
@@ -95,40 +97,54 @@ module.exports = {
 };
 
 
-// =============================================================
-// Tester methods to assess CRUD operations
-// =============================================================
+// // =============================================================
+// // Tester methods to assess CRUD operations
+// // =============================================================
+//
+// function insertTestGameLogs (Game, User) {
+//
+//     var gameLogger = require('./game');
+//
+//     function randomDate(start, end) {
+//         return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+//     }
+//
+//     User.findAll().then(function(users) {
+//
+//         users = users.map(function(u) {
+//             return u.dataValues;
+//         });
+//
+//         console.log(users);
+//
+//         for (i=0; i<users.length; i++) {
+//             var numScores = Math.ceil(Math.random() * 5);
+//             var id = users[i].id;
+//             for (j=0; j<numScores; j++) {
+//                 var score = Math.floor(Math.random() * 250);
+//                 var start = randomDate(new Date(2016, 7, 13), new Date());
+//                 gameLogger.insert({id: id, start: start, score: score}, Game);
+//             }
+//         }
+//     });
+// }
 
-function insertTestGameLogs () {
-
-    var gameLogger = require('./game');
-
-    function randomDate(start, end) {
-        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    }
-
-    User.findAll().then(function(users) {
-
-        users = users.map(function(u) {
-            return u.dataValues;
-        });
-
-        console.log(users);
-
-        for (i=0; i<users.length; i++) {
-            var numScores = Math.ceil(Math.random() * 5);
-            var id = users[i].id;
-            for (j=0; j<numScores; j++) {
-                var score = Math.floor(Math.random() * 1000);
-                var start = randomDate(new Date(2016, 7, 13), new Date());
-                gameLogger.insert({id: id, start: start, score: score});
-            }
-        }
-    });
-}
-
-// Tester activators below here
-// =====================================================
-// gameLogger = require('./game.js');
-// insertTestGameLogs();
-// gameLogger.getHighScore();
+// // Tester DB inserts here with junk data. Off during
+// // normal operation.
+// // =====================================================
+// // connect to DB and configure serialize
+// function testPopulateGameTable() {
+//     var configDB = require('../../config/database.js');
+//     var Sequelize = require('sequelize');
+//     var sequelize = new Sequelize(configDB.url);
+//
+// // initialize schemas here since they will be sent seperately
+//     var Game = sequelize.import('../../api/models/game');
+//     Game.sync();
+//     var User = sequelize.import('../../api/models/user');
+//     User.sync();
+// // gameLogger = require('./game.js');
+//     insertTestGameLogs(Game, User);
+// // gameLogger.getHighScore();
+// }
+// // testPopulateGameTable();
