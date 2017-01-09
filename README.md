@@ -9,6 +9,14 @@ and Slither.io
 It was due on 2016.12.06 and even though we got an A, 
 I have continued working on it.
 
+To see the project we turned in use:
+
+<em>$ git checkout assignment</em>
+
+To switch back to current version:
+
+<em>$ git checkout master</em>
+
 Working link: https://ramio.herokuapp.com/
 
 Collaborators:
