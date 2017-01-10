@@ -37,7 +37,6 @@ function insertTestUsers(User, Game) {
     for (var i=0; i<fellowship.length; i++) {
         var newUser = User.build ({username: fellowship[i], password: User.generateHash('hobbit')});
         newUser.save().then(function(newUser) {
-            console.log(newUser.dataValues.username + '\n');
     })
             .catch(function(err) {
                 console.log(err.message);
@@ -62,14 +61,13 @@ function insertTestGameLogs (User, Game) {
 
     User.findAll().then(function(users) {
         for (var i=0; i<users.length; i++) {
-            var avgGames = Math.ceil(Math.random() * 5);
+            var avgGames = Math.round(Math.random() * 5);
             var id = users[i].id;
             for (j=0; j<avgGames; j++) {
                 var score = Math.floor(Math.random() * 250);
                 var start = randomDate(new Date(2016, 10, 9), new Date());
                 var newGame = Game.build({id: id, score: score, start: start});
                 newGame.save().then(function(newGame) {
-                    console.log(newGame.dataValues.id + '\n');
                 })
                     .catch(function(err) {
                         console.log(err.message);

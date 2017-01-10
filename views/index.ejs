@@ -51,15 +51,15 @@
             <tbody>
             <tr>
                 <td><span class="fa fa-trophy text-carolina"></span></td>
-                <td><%= topfive[0].username%></td>
-                <td><%= topfive[0].score%></td>
+                <td><%= topPlayers[0].username%></td>
+                <td><%= topPlayers[0].score%></td>
             </tr>
-            <% if (topfive) {
-                for (var i = 1; i < topfive.length; i++){ %>
+            <% if (topPlayers) {
+                for (var i = 1; i < topPlayers.length; i++){ %>
             <tr>
                 <td><%= i + 1 %></td>
-                <td><%= topfive[i].username %></td>
-                <td><%= topfive[i].score %></td>
+                <td><%= topPlayers[i].username %></td>
+                <td><%= topPlayers[i].score %></td>
             </tr>
             <% }
             } %>
