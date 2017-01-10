@@ -18,7 +18,7 @@ var bodyParser   = require('body-parser'); // parse posts
 var session      = require('express-session'); // session middleware
 
 // connect to DB and configure serialize
-var configDB = require('./config/database.js');
+var configDB = require('./api/config/database.js');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(configDB.url);
 
@@ -34,7 +34,7 @@ User.sync()
         Game.sync();
     });
 
-require('./config/passport')(passport, User); // pass passport for configuration
+require('./api/config/passport')(passport, User); // pass passport for configuration
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
