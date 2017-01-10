@@ -10,8 +10,8 @@ module.exports = function(app, passport, io, Game, User) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        // res.render('index.ejs'); // load the index.ejs file
-        gameStats.getTopFivePlayers(req, res, Game, User);
+        res.render('index.ejs'); // load the index.ejs file
+        // gameStats.getTopFivePlayers(req, res, Game, User);
     });
 
     // =====================================
