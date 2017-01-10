@@ -1,7 +1,7 @@
 // app/routes.js
 var game_server = require('../game-server');
 var path = require('path');
-var gameStats = require('./controllers/game');
+var gameLogger = require('./controllers/game');
 
 
 module.exports = function(app, passport, io, Game, User) {
@@ -11,7 +11,7 @@ module.exports = function(app, passport, io, Game, User) {
     // =====================================
     app.get('/', function(req, res) {
         // res.render('index.ejs'); // load the index.ejs file
-        gameStats.getTopFivePlayers(req, res, Game, User);
+        gameLogger.getTopFivePlayers(req, res, Game, User);
     });
 
     // =====================================
@@ -54,7 +54,7 @@ module.exports = function(app, passport, io, Game, User) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        gameStats.getHighScore(req, res, gameStats.getLastFive, Game);
+        gameLogger.getHighScore(req, res, gameLogger.getLastFiveScores, Game);
     });
 
     // =====================================

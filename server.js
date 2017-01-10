@@ -24,9 +24,11 @@ var sequelize = new Sequelize(configDB.url);
 
 // initialize schemas here since they will be sent seperately
 var User = sequelize.import('./api/models/user');
-User.sync();
 var Game = sequelize.import('./api/models/game');
-Game.sync();
+User.sync()
+    .then(function() {
+        Game.sync();
+    });
 
 require('./config/passport')(passport, User); // pass passport for configuration
 

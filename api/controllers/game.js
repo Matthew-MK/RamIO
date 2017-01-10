@@ -33,7 +33,7 @@ module.exports = {
                 console.log(e);
             })
     },
-    getLastFive: function(req, res, Game) {
+    getLastFiveScores: function(req, res, Game) {
         Game.findAll({
             attributes: ['start', 'score'],
             where: {
