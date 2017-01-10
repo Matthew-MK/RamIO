@@ -25,6 +25,10 @@ var sequelize = new Sequelize(configDB.url);
 // initialize schemas here since they will be sent seperately
 var User = sequelize.import('./api/models/user');
 var Game = sequelize.import('./api/models/game');
+
+User.hasMany(Game);
+Game.belongsTo(User);
+
 User.sync()
     .then(function() {
         Game.sync();
