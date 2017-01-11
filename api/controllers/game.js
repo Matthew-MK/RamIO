@@ -1,8 +1,6 @@
 // Schema model and functions to insert and delete into games sql table
 // =======================================================
 
-
-
 module.exports = {
     insert: function (game, Game) {
         Game.build(game)

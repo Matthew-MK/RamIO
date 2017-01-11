@@ -1,9 +1,10 @@
 
-// var gameLogger = require('./app/controllers/gameLogger');
+var gameLogger = require('./api/controllers/game');
 
-module.exports = function(io, user, app) {
+module.exports = function(io, user, GameModel) {
     io.on('connection', function(socket){
         console.log('a user connected');
+        var start = new Date();
         // Take id from authentication ID
         var id = user.id;
         var username = user.username;
@@ -12,7 +13,7 @@ module.exports = function(io, user, app) {
         var color = randomColor(150);
         Game.entities[id] = [coords[0],coords[1],10, color, username];
         // Send an id and coordinates for the player to spawn at
-        socket.emit('PlayerSetup', { id: id, username: username, coords: coords, color: color, entities: Game.entities, grass: Game.grass, missiles: Game.missiles });
+        socket.emit('PlayerSetup', { start: start, id: id, username: username, coords: coords, color: color, entities: Game.entities, grass: Game.grass, missiles: Game.missiles });
         /* debugging player connection
          socket.on('setup', function (id,x,y,color) {
          console.log(id + " setup at " + x + "," + y + " with color " + color);
@@ -34,7 +35,7 @@ module.exports = function(io, user, app) {
                 io.emit('GrassUpdate', {id: data.id, x: replacementgrass.x, y: replacementgrass.y});
             }
         });
-        // player is attempting to pick up a missile (in the gameLogger.js main gameLogger loop, not in the clientCSinteractions.js)
+        // player is attempting to pick up a missile (in the game.js main game loop, not in the clientCSinteractions.js)
         // TODO make sure the change from copied 'EatRequest' to 'PickupRequest' below works as intended
         // TODO make sure the 'PickupMissle' and 'MissileUpdate' given to socket.emit and io.emit respectively work as intended
         socket.on('PickupRequest', function(data){
@@ -50,10 +51,11 @@ module.exports = function(io, user, app) {
         socket.on('MissileEvent', function (data) {
             socket.broadcast.emit('MissileEvent', data);
         });
-        socket.on('MissileHit', function (data) {
-            socket.broadcast.emit('MissileHit', data);
-        });
+        // socket.on('MissileHit', function (data) {
+        //     socket.broadcast.emit('MissileHit', data);
+        // });
         socket.on('Die', function (data) {
+            gameLogger.insert({id: data.id, score: data.score, start: data.start}, GameModel);
             io.emit('Die', data);
         });
         socket.on('RequestRespawn', function () {
@@ -96,7 +98,7 @@ module.exports = function(io, user, app) {
         for (j = 0; j < Game.numMissiles; j++) {
             Game.missiles.push(generateMissile());
         }
-        //TODO add conditions for ending the gameLogger
+        //TODO add conditions for ending the game
         this.gamestart = (new Date).getTime;
     };
     var startrunning = true;

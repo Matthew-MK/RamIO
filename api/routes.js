@@ -62,7 +62,7 @@ module.exports = function(app, passport, io, Game, User) {
     // =====================================
     app.get('/game', isLoggedIn, function(req, res) {
         res.sendFile(path.join(__dirname, '../public', 'index.html'));
-        game_server(io, req.user, app);
+        game_server(io, req.user, Game);
     });
 
     // =====================================

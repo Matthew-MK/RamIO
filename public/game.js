@@ -141,11 +141,14 @@ function drawMap(players,grass, missiles) {
                 if (Game.firedMissiles[i].playerid != Player.id && Math.abs(offsetX) < Player.radius + MISSILE_SIZE && Math.abs(offsetY) < Player.radius + MISSILE_SIZE) {
                     //TODO: Make damage dynamic
                     Player.size -= HIT_REDUCTION;
+                    console.log('HIT');
                     Game.firedMissiles[i] = null;
-                    socket.emit('MissileHit', Game.firedMissiles[i]);
                     if(Player.size <= 0) {
+                        console.log('DEATH');
                         processDeath(Game.firedMissiles[i]);
                     }
+                    socket.emit('MissileHit', Game.firedMissiles[i]);
+
                 }
                 drawCircle(MISSILE_SIZE, Width/2 + offsetX, Height/2 + offsetY, 'red');
                 //TODO Make this a function?
@@ -295,7 +298,7 @@ function processDeath(reason) {
     //TODO: trigger post-death screen
     var respawned = false;
     //reason.playerid is playerid of player who killed me
-    var death = {id: Player.id, reason: reason.playerid};
+    var death = {id: Player.id, reason: reason.playerid, score: Player.maxSize, start: Player.start};
     socket.emit('Die', death);
     //set speed to 0 on death
     Player.speed = 0;

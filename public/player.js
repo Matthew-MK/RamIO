@@ -17,7 +17,8 @@ img.src = "/resources/playerRamio.svg";
 enemyRam = new Image();
 enemyRam.src = "/resources/enemyRam.svg";
 
-Player.initialize = function(id, position, color, username) {
+Player.initialize = function(id, position, color, username, start) {
+    this.start = start;
     this.id = id;
     this.x = position[0];
     this.y = position[1];
