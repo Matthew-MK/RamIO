@@ -3,7 +3,7 @@
 Final project for Fall 2016 COMP426 @ UNC.
 
 A real-time, multiplayer, HTML5 game using Node, Express, SocketIO, 
-PostgreSQL, and others. It was inspired by games like inspired by Agar.io 
+PostgreSQL, and others. It was inspired by games like Agar.io 
 and Slither.io
 
 It was due on 2016.12.06 and even though we got an A, 
